@@ -1,6 +1,8 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 const (
 	Vazio        = 0
@@ -26,6 +28,8 @@ func main() {
 		s, pos := velha.getSimboloPosicaoMarcacoesEmSequencia()
 		fmt.Printf("[%s] linha: %d, coluna: %d\n\n", getSimbolo(s), pos[0]+1, pos[1]+1)
 	}
+
+	// os.Exit(0)
 }
 
 // FUNÇÕES RELACIONADAS A STRUCT tictacToe
@@ -237,14 +241,25 @@ func getSimbolo(valor int) string {
 	}
 }
 
-func (self *ticTacToe) getLinha(posicao int) [LimiteLinha]int {
+func (self *ticTacToe) getLinha(posicao int) ([LimiteLinha]int, [LimiteLinha][2]int) {
 	ehPosicaoValida(&posicao)
-	return self.tabuleiro[posicao]
+
+	var posicoes [LimiteLinha][2]int
+	for i := 0; i < LimiteLinha; i++ {
+		posicoes[i] = [2]int{posicao, i}
+	}
+
+	return self.tabuleiro[posicao], posicoes
 }
 
-func (self *ticTacToe) getColuna(posicao int) [LimiteColuna]int {
+func (self *ticTacToe) getColuna(posicao int) ([LimiteColuna]int, [LimiteLinha][2]int) {
 	ehPosicaoValida(&posicao)
 	var colunaTemp [LimiteColuna]int
+
+	var posicoes [LimiteLinha][2]int
+	for i := 0; i < LimiteLinha; i++ {
+		posicoes[i] = [2]int{i, posicao}
+	}
 
 	for i, linha := range self.tabuleiro {
 		for j, coluna := range linha {
@@ -254,11 +269,13 @@ func (self *ticTacToe) getColuna(posicao int) [LimiteColuna]int {
 		}
 	}
 
-	return colunaTemp
+	return colunaTemp, posicoes
 }
 
-func (self *ticTacToe) getDiagonal(posicao int) [LimiteLinha]int {
+func (self *ticTacToe) getDiagonal(posicao int) ([LimiteLinha]int, [LimiteLinha][2]int) {
 	var diagonalTemp [LimiteLinha]int
+
+	var posicoes [LimiteLinha][2]int
 
 	if posicao == 1 {
 		// diagonal secundária
@@ -267,6 +284,13 @@ func (self *ticTacToe) getDiagonal(posicao int) [LimiteLinha]int {
 			posicao--
 			diagonalTemp[i] = linha[posicao]
 		}
+
+		col := LimiteLinha
+		for i := 0; i <= 2; i++ {
+			col--
+			posicoes[i] = [2]int{i, col}
+		}
+
 	} else {
 		// diagonal principal
 		posicao = 0
@@ -274,9 +298,13 @@ func (self *ticTacToe) getDiagonal(posicao int) [LimiteLinha]int {
 			diagonalTemp[i] = linha[posicao]
 			posicao++
 		}
+
+		for i := 0; i < LimiteLinha; i++ {
+			posicoes[i] = [2]int{i, i}
+		}
 	}
 
-	return diagonalTemp
+	return diagonalTemp, posicoes
 }
 
 func ehPosicaoValida(posicao *int) {
@@ -290,28 +318,28 @@ func ehPosicaoValida(posicao *int) {
 func (self *ticTacToe) getSimboloPosicaoMarcacoesEmSequencia() (simbolo int, posicao [2]int) {
 	/*
 		Função que retorna o símbolo(int) e a posição[linha,coluna]([2]int)
-		que falta para ser marcado para ganhar o jogo da velha. Se retornar Vazio(0),
-		a posição retornada é a última vazia livre.
+		que falta para ser marcado para fazer 3 marcações em sequência.
+		Se retornar Vazio(0), a posição retornada é a última vazia livre.
 	*/
 	quantSequencia := LimiteLinha - 1
 	quantLacos := LimiteLinha*2 + 2
 	for i := 0; i < quantLacos; i++ {
-		x, o, v := 0, 0, 0
+		x, o, v := 0, 0, 0 // quantidade de x, o, v(azio)
 
 		var sequencia [LimiteLinha]int
-		p := i
+		var posicoes [LimiteLinha][2]int
+
+		p := i // p é a posição relativa para as funções de linha, coluna e diagonal
 		if i < LimiteLinha {
-			sequencia = self.getLinha(p)
+			sequencia, posicoes = self.getLinha(p)
 		} else if i < LimiteLinha*2 {
 			p -= LimiteLinha
-			sequencia = self.getColuna(p)
+			sequencia, posicoes = self.getColuna(p)
 		} else {
 			p -= LimiteLinha * 2
-			sequencia = self.getDiagonal(p)
+			sequencia, posicoes = self.getDiagonal(p)
 		}
 
-		// k é usado na posição da diagonal secundária
-		k := len(sequencia) - 1
 		for j, item := range sequencia {
 			switch item {
 			case X:
@@ -320,27 +348,17 @@ func (self *ticTacToe) getSimboloPosicaoMarcacoesEmSequencia() (simbolo int, pos
 				o++
 			default:
 				v++
-				if i < LimiteLinha {
-					posicao[0] = p
-					posicao[1] = j
-				} else if i < LimiteLinha*2 {
-					posicao[1] = p
-					posicao[0] = j
-				} else {
-					posicao[0] = j
-					if p == 0 {
-						posicao[1] = j
-					} else {
-						k -= j
-						posicao[1] = k
-					}
-				}
+
+				posicao = posicoes[j]
 			}
+
 		}
 
+		// se falta uma célula para marcar X
 		if x == quantSequencia && v == 1 && o == 0 {
 			simbolo = X
 			return
+			// se falta uma célula para marcar O
 		} else if o == quantSequencia && v == 1 && x == 0 {
 			simbolo = O
 			return
