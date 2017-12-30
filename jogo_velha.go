@@ -257,14 +257,6 @@ func (self *ticTacToe) coluna(posicao int) [LimiteColuna]int {
 	return colunaTemp
 }
 
-func posicaoValida(posicao *int) {
-	if *posicao >= LimiteLinha {
-		*posicao = 0
-	} else if *posicao < 0 {
-		*posicao = 0
-	}
-}
-
 func (self *ticTacToe) diagonal(posicao int) [LimiteLinha]int {
 	var diagonalTemp [LimiteLinha]int
 
@@ -285,6 +277,14 @@ func (self *ticTacToe) diagonal(posicao int) [LimiteLinha]int {
 	}
 
 	return diagonalTemp
+}
+
+func posicaoValida(posicao *int) {
+	if *posicao >= LimiteLinha {
+		*posicao = 0
+	} else if *posicao < 0 {
+		*posicao = 0
+	}
 }
 
 func (self *ticTacToe) getSimboloPosicaoMarcacoesEmSequencia() (simbolo int, posicao [2]int) {
