@@ -237,13 +237,13 @@ func getSimbolo(valor int) string {
 	}
 }
 
-func (self *ticTacToe) linha(posicao int) [LimiteLinha]int {
-	posicaoValida(&posicao)
+func (self *ticTacToe) getLinha(posicao int) [LimiteLinha]int {
+	ehPosicaoValida(&posicao)
 	return self.tabuleiro[posicao]
 }
 
-func (self *ticTacToe) coluna(posicao int) [LimiteColuna]int {
-	posicaoValida(&posicao)
+func (self *ticTacToe) getColuna(posicao int) [LimiteColuna]int {
+	ehPosicaoValida(&posicao)
 	var colunaTemp [LimiteColuna]int
 
 	for i, linha := range self.tabuleiro {
@@ -257,7 +257,7 @@ func (self *ticTacToe) coluna(posicao int) [LimiteColuna]int {
 	return colunaTemp
 }
 
-func (self *ticTacToe) diagonal(posicao int) [LimiteLinha]int {
+func (self *ticTacToe) getDiagonal(posicao int) [LimiteLinha]int {
 	var diagonalTemp [LimiteLinha]int
 
 	if posicao == 1 {
@@ -279,7 +279,7 @@ func (self *ticTacToe) diagonal(posicao int) [LimiteLinha]int {
 	return diagonalTemp
 }
 
-func posicaoValida(posicao *int) {
+func ehPosicaoValida(posicao *int) {
 	if *posicao >= LimiteLinha {
 		*posicao = 0
 	} else if *posicao < 0 {
@@ -301,13 +301,13 @@ func (self *ticTacToe) getSimboloPosicaoMarcacoesEmSequencia() (simbolo int, pos
 		var sequencia [LimiteLinha]int
 		p := i
 		if i < LimiteLinha {
-			sequencia = self.linha(p)
+			sequencia = self.getLinha(p)
 		} else if i < LimiteLinha*2 {
 			p -= LimiteLinha
-			sequencia = self.coluna(p)
+			sequencia = self.getColuna(p)
 		} else {
 			p -= LimiteLinha * 2
-			sequencia = self.diagonal(p)
+			sequencia = self.getDiagonal(p)
 		}
 
 		// k é usado na posição da diagonal secundária
