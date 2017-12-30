@@ -18,6 +18,8 @@ type ticTacToe struct {
 	tabuleiro [LimiteLinha][LimiteColuna]int
 }
 
+type posicoesRelativas [LimiteLinha][2]int
+
 func main() {
 	// velha := makeTicTacToe(1)
 
@@ -32,7 +34,7 @@ func main() {
 	// os.Exit(0)
 }
 
-// FUNÇÕES RELACIONADAS A STRUCT tictacToe
+// FUNÇÕES RELACIONADAS A STRUCT ticTacToe
 
 func (self *ticTacToe) zera() {
 	for i := 0; i < LimiteLinha; i++ {
@@ -241,10 +243,10 @@ func getSimbolo(valor int) string {
 	}
 }
 
-func (self *ticTacToe) getLinha(posicao int) ([LimiteLinha]int, [LimiteLinha][2]int) {
+func (self *ticTacToe) getLinha(posicao int) ([LimiteLinha]int, posicoesRelativas) {
 	ehPosicaoValida(&posicao)
 
-	var posicoes [LimiteLinha][2]int
+	var posicoes posicoesRelativas
 	for i := 0; i < LimiteLinha; i++ {
 		posicoes[i] = [2]int{posicao, i}
 	}
@@ -252,11 +254,11 @@ func (self *ticTacToe) getLinha(posicao int) ([LimiteLinha]int, [LimiteLinha][2]
 	return self.tabuleiro[posicao], posicoes
 }
 
-func (self *ticTacToe) getColuna(posicao int) ([LimiteColuna]int, [LimiteLinha][2]int) {
+func (self *ticTacToe) getColuna(posicao int) ([LimiteColuna]int, posicoesRelativas) {
 	ehPosicaoValida(&posicao)
 	var colunaTemp [LimiteColuna]int
 
-	var posicoes [LimiteLinha][2]int
+	var posicoes posicoesRelativas
 	for i := 0; i < LimiteLinha; i++ {
 		posicoes[i] = [2]int{i, posicao}
 	}
@@ -272,10 +274,10 @@ func (self *ticTacToe) getColuna(posicao int) ([LimiteColuna]int, [LimiteLinha][
 	return colunaTemp, posicoes
 }
 
-func (self *ticTacToe) getDiagonal(posicao int) ([LimiteLinha]int, [LimiteLinha][2]int) {
+func (self *ticTacToe) getDiagonal(posicao int) ([LimiteLinha]int, posicoesRelativas) {
 	var diagonalTemp [LimiteLinha]int
 
-	var posicoes [LimiteLinha][2]int
+	var posicoes posicoesRelativas
 
 	if posicao == 1 {
 		// diagonal secundária
