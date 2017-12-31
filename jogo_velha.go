@@ -23,12 +23,15 @@ type posicoesRelativas [LimiteLinha][2]int
 func main() {
 	// velha := makeTicTacToe(1)
 
-	for i := 0; i < 24; i++ {
+	for i := 0; i < 32; i++ {
 		velha := makeTeste(i)
 		velha.imprime()
 
 		s, pos := velha.getSimboloPosicaoMarcacoesEmSequencia()
-		fmt.Printf("[%s] linha: %d, coluna: %d\n\n", getSimbolo(s), pos[0]+1, pos[1]+1)
+		fmt.Printf("Marcaçoes em sequência: [%s] linha: %d, coluna: %d\n\n", getSimbolo(s), pos[0]+1, pos[1]+1)
+
+		s, pos = velha.getSimboloPosicaoDuasMarcacoesEmSequencia()
+		fmt.Printf("2 Marcaçoes em sequência: [%s] linha: %d, coluna: %d\n\n", getSimbolo(s), pos[0]+1, pos[1]+1)
 	}
 
 	// os.Exit(0)
@@ -198,6 +201,54 @@ func makeTeste(numero int) (jogoVelha ticTacToe) {
 			[3]int{Vazio, Vazio, O},
 			[3]int{Vazio, O, Vazio},
 			[3]int{Vazio, Vazio, Vazio},
+		}
+	case 24:
+		jogoVelha.tabuleiro = [3][3]int{
+			[3]int{Vazio, X, Vazio},
+			[3]int{X, Vazio, Vazio},
+			[3]int{Vazio, Vazio, Vazio},
+		}
+	case 25:
+		jogoVelha.tabuleiro = [3][3]int{
+			[3]int{Vazio, O, Vazio},
+			[3]int{Vazio, Vazio, O},
+			[3]int{Vazio, Vazio, Vazio},
+		}
+	case 26:
+		jogoVelha.tabuleiro = [3][3]int{
+			[3]int{Vazio, Vazio, Vazio},
+			[3]int{X, Vazio, Vazio},
+			[3]int{Vazio, X, Vazio},
+		}
+	case 27:
+		jogoVelha.tabuleiro = [3][3]int{
+			[3]int{Vazio, Vazio, Vazio},
+			[3]int{Vazio, Vazio, O},
+			[3]int{Vazio, O, Vazio},
+		}
+	case 28:
+		jogoVelha.tabuleiro = [3][3]int{
+			[3]int{O, X, Vazio},
+			[3]int{X, Vazio, Vazio},
+			[3]int{Vazio, Vazio, Vazio},
+		}
+	case 29:
+		jogoVelha.tabuleiro = [3][3]int{
+			[3]int{Vazio, O, X},
+			[3]int{Vazio, Vazio, O},
+			[3]int{Vazio, Vazio, Vazio},
+		}
+	case 30:
+		jogoVelha.tabuleiro = [3][3]int{
+			[3]int{Vazio, Vazio, Vazio},
+			[3]int{X, Vazio, Vazio},
+			[3]int{O, X, Vazio},
+		}
+	case 31:
+		jogoVelha.tabuleiro = [3][3]int{
+			[3]int{Vazio, Vazio, Vazio},
+			[3]int{Vazio, Vazio, O},
+			[3]int{Vazio, O, X},
 		}
 	}
 
@@ -370,6 +421,94 @@ func (self *ticTacToe) getSimboloPosicaoMarcacoesEmSequencia() (simbolo int, pos
 	simbolo = Vazio
 	return
 
+}
+
+func (self *ticTacToe) getSimboloPosicaoDuasMarcacoesEmSequencia() (simbolo int, posicao [2]int) {
+	/*
+		Função que retorna o símbolo(int) e a posição[linha,coluna]([2]int)
+		que falta para formar duas marcações em sequência em dois eixos do tabuleiro.
+		Se retornar Vazio(0), a posição retornada
+	*/
+	quantSequencia := LimiteLinha - 1
+	quantLacos := 5
+
+	for i := 0; i <= quantLacos; i++ {
+		x, o, v := 0, 0, 0 // quantidade de x, o, v(vazio)
+
+		var sequencia []int
+
+		switch i {
+		case 0:
+			sequencia, posicao = self.getSequenciaPosicao(0, 0)
+		case 1:
+			sequencia, posicao = self.getSequenciaPosicao(0, 2)
+		case 2:
+			sequencia, posicao = self.getSequenciaPosicao(2, 2)
+		case 3:
+			sequencia, posicao = self.getSequenciaPosicao(2, 0)
+		default:
+			sequencia, posicao = self.getSequenciaPosicao(1, 1)
+		}
+
+		for j := 0; j < len(sequencia); j++ {
+			item := sequencia[j]
+			switch item {
+			case X:
+				x++
+			case O:
+				o++
+			default:
+				v++
+			}
+		}
+
+		if x == quantSequencia && v == 3 && o == 0 && sequencia[0] == Vazio {
+			simbolo = X
+			return
+		} else if o == quantSequencia && v == 3 && x == 0 && sequencia[0] == Vazio {
+			simbolo = O
+			return
+		} else if x == quantSequencia && v == 3 && o == 0 && sequencia[1] == Vazio {
+			simbolo = X
+			return
+		} else if o == quantSequencia && v == 3 && x == 0 && sequencia[1] == Vazio {
+			simbolo = O
+			return
+		}
+
+	}
+
+	simbolo = Vazio
+	return
+}
+
+func (self *ticTacToe) getSequenciaPosicao(linha int, coluna int) (sequencia []int, posicao [2]int) {
+	var posicoes [][2]int
+
+	s, p := self.getLinha(linha)
+	for k := 0; k < len(s); k++ {
+		sequencia = append(sequencia, s[k])
+		posicoes = append(posicoes, p[k])
+	}
+
+	if linha == 1 && coluna == 1 {
+		s, p = self.getColuna(coluna)
+		for k := 0; k < len(s); k++ {
+			if k != coluna {
+				sequencia = append(sequencia, s[k])
+				posicoes = append(posicoes, p[k])
+			}
+		}
+	} else {
+		s, p = self.getColuna(coluna)
+		for k := 1; k < len(s); k++ {
+			sequencia = append(sequencia, s[k])
+			posicoes = append(posicoes, p[k])
+		}
+	}
+
+	posicao = posicoes[coluna]
+	return
 }
 
 // FUNÇÕES RELACIONADAS A STRUCT tictacToe
