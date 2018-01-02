@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"math"
+	"math/rand"
 )
 
 const (
@@ -23,15 +25,17 @@ type posicoesRelativas [LimiteLinha][2]int
 func main() {
 	// velha := makeTicTacToe(1)
 
-	for i := 0; i < 32; i++ {
+	for i := 0; i < 5; i++ {
 		velha := makeTeste(i)
 		velha.imprime()
 
 		s, pos := velha.getSimboloPosicaoMarcacoesEmSequencia()
-		fmt.Printf("Marcaçoes em sequência: [%s] linha: %d, coluna: %d\n\n", getSimbolo(s), pos[0]+1, pos[1]+1)
+		fmt.Printf("Marcaçoes em sequência: [%s] linha: %d, coluna: %d\n", getSimbolo(s), pos[0]+1, pos[1]+1)
 
 		s, pos = velha.getSimboloPosicaoDuasMarcacoesEmSequencia()
-		fmt.Printf("2 Marcaçoes em sequência: [%s] linha: %d, coluna: %d\n\n", getSimbolo(s), pos[0]+1, pos[1]+1)
+		fmt.Printf("2 Marcaçoes em sequência: [%s] linha: %d, coluna: %d\n", getSimbolo(s), pos[0]+1, pos[1]+1)
+
+		fmt.Println()
 	}
 
 	// os.Exit(0)
@@ -60,195 +64,33 @@ func makeTeste(numero int) (jogoVelha ticTacToe) {
 	switch numero {
 	case 0:
 		jogoVelha.tabuleiro = [3][3]int{
-			[3]int{Vazio, X, X},
 			[3]int{Vazio, Vazio, Vazio},
 			[3]int{Vazio, Vazio, Vazio},
+			[3]int{X, Vazio, X},
 		}
 	case 1:
 		jogoVelha.tabuleiro = [3][3]int{
-			[3]int{X, Vazio, X},
 			[3]int{Vazio, Vazio, Vazio},
-			[3]int{Vazio, Vazio, Vazio},
+			[3]int{Vazio, X, Vazio},
+			[3]int{X, Vazio, Vazio},
 		}
 	case 2:
 		jogoVelha.tabuleiro = [3][3]int{
-			[3]int{X, X, Vazio},
-			[3]int{Vazio, Vazio, Vazio},
+			[3]int{Vazio, Vazio, O},
+			[3]int{Vazio, O, Vazio},
 			[3]int{Vazio, Vazio, Vazio},
 		}
 	case 3:
 		jogoVelha.tabuleiro = [3][3]int{
-			[3]int{Vazio, Vazio, Vazio},
-			[3]int{Vazio, O, O},
+			[3]int{X, Vazio, Vazio},
+			[3]int{Vazio, X, Vazio},
 			[3]int{Vazio, Vazio, Vazio},
 		}
 	case 4:
 		jogoVelha.tabuleiro = [3][3]int{
 			[3]int{Vazio, Vazio, Vazio},
-			[3]int{O, Vazio, O},
-			[3]int{Vazio, Vazio, Vazio},
-		}
-	case 5:
-		jogoVelha.tabuleiro = [3][3]int{
-			[3]int{Vazio, Vazio, Vazio},
-			[3]int{O, O, Vazio},
-			[3]int{Vazio, Vazio, Vazio},
-		}
-	case 6:
-		jogoVelha.tabuleiro = [3][3]int{
-			[3]int{Vazio, Vazio, Vazio},
-			[3]int{Vazio, Vazio, Vazio},
-			[3]int{Vazio, X, X},
-		}
-	case 7:
-		jogoVelha.tabuleiro = [3][3]int{
-			[3]int{Vazio, Vazio, Vazio},
-			[3]int{Vazio, Vazio, Vazio},
-			[3]int{X, Vazio, X},
-		}
-	case 8:
-		jogoVelha.tabuleiro = [3][3]int{
-			[3]int{Vazio, Vazio, Vazio},
-			[3]int{Vazio, Vazio, Vazio},
-			[3]int{X, X, Vazio},
-		}
-	case 9:
-		jogoVelha.tabuleiro = [3][3]int{
-			[3]int{Vazio, Vazio, Vazio},
-			[3]int{O, Vazio, Vazio},
-			[3]int{O, Vazio, Vazio},
-		}
-	case 10:
-		jogoVelha.tabuleiro = [3][3]int{
-			[3]int{O, Vazio, Vazio},
-			[3]int{Vazio, Vazio, Vazio},
-			[3]int{O, Vazio, Vazio},
-		}
-	case 11:
-		jogoVelha.tabuleiro = [3][3]int{
-			[3]int{O, Vazio, Vazio},
-			[3]int{O, Vazio, Vazio},
-			[3]int{Vazio, Vazio, Vazio},
-		}
-	case 12:
-		jogoVelha.tabuleiro = [3][3]int{
-			[3]int{Vazio, Vazio, Vazio},
-			[3]int{Vazio, X, Vazio},
-			[3]int{Vazio, X, Vazio},
-		}
-	case 13:
-		jogoVelha.tabuleiro = [3][3]int{
-			[3]int{Vazio, X, Vazio},
-			[3]int{Vazio, Vazio, Vazio},
-			[3]int{Vazio, X, Vazio},
-		}
-	case 14:
-		jogoVelha.tabuleiro = [3][3]int{
-			[3]int{Vazio, X, Vazio},
-			[3]int{Vazio, X, Vazio},
-			[3]int{Vazio, Vazio, Vazio},
-		}
-	case 15:
-		jogoVelha.tabuleiro = [3][3]int{
-			[3]int{Vazio, Vazio, Vazio},
-			[3]int{Vazio, Vazio, O},
-			[3]int{Vazio, Vazio, O},
-		}
-	case 16:
-		jogoVelha.tabuleiro = [3][3]int{
-			[3]int{Vazio, Vazio, O},
-			[3]int{Vazio, Vazio, Vazio},
-			[3]int{Vazio, Vazio, O},
-		}
-	case 17:
-		jogoVelha.tabuleiro = [3][3]int{
-			[3]int{Vazio, Vazio, O},
-			[3]int{Vazio, Vazio, O},
-			[3]int{Vazio, Vazio, Vazio},
-		}
-	case 18:
-		jogoVelha.tabuleiro = [3][3]int{
-			[3]int{Vazio, Vazio, Vazio},
-			[3]int{Vazio, X, Vazio},
-			[3]int{Vazio, Vazio, X},
-		}
-	case 19:
-		jogoVelha.tabuleiro = [3][3]int{
-			[3]int{X, Vazio, Vazio},
-			[3]int{Vazio, Vazio, Vazio},
-			[3]int{Vazio, Vazio, X},
-		}
-	case 20:
-		jogoVelha.tabuleiro = [3][3]int{
-			[3]int{X, Vazio, Vazio},
-			[3]int{Vazio, X, Vazio},
-			[3]int{Vazio, Vazio, Vazio},
-		}
-	case 21:
-		jogoVelha.tabuleiro = [3][3]int{
-			[3]int{Vazio, Vazio, Vazio},
-			[3]int{Vazio, O, Vazio},
-			[3]int{O, Vazio, Vazio},
-		}
-	case 22:
-		jogoVelha.tabuleiro = [3][3]int{
-			[3]int{Vazio, Vazio, O},
-			[3]int{Vazio, Vazio, Vazio},
-			[3]int{O, Vazio, Vazio},
-		}
-	case 23:
-		jogoVelha.tabuleiro = [3][3]int{
-			[3]int{Vazio, Vazio, O},
-			[3]int{Vazio, O, Vazio},
-			[3]int{Vazio, Vazio, Vazio},
-		}
-	case 24:
-		jogoVelha.tabuleiro = [3][3]int{
-			[3]int{Vazio, X, Vazio},
-			[3]int{X, Vazio, Vazio},
-			[3]int{Vazio, Vazio, Vazio},
-		}
-	case 25:
-		jogoVelha.tabuleiro = [3][3]int{
 			[3]int{Vazio, O, Vazio},
 			[3]int{Vazio, Vazio, O},
-			[3]int{Vazio, Vazio, Vazio},
-		}
-	case 26:
-		jogoVelha.tabuleiro = [3][3]int{
-			[3]int{Vazio, Vazio, Vazio},
-			[3]int{X, Vazio, Vazio},
-			[3]int{Vazio, X, Vazio},
-		}
-	case 27:
-		jogoVelha.tabuleiro = [3][3]int{
-			[3]int{Vazio, Vazio, Vazio},
-			[3]int{Vazio, Vazio, O},
-			[3]int{Vazio, O, Vazio},
-		}
-	case 28:
-		jogoVelha.tabuleiro = [3][3]int{
-			[3]int{O, X, Vazio},
-			[3]int{X, Vazio, Vazio},
-			[3]int{Vazio, Vazio, Vazio},
-		}
-	case 29:
-		jogoVelha.tabuleiro = [3][3]int{
-			[3]int{Vazio, O, X},
-			[3]int{Vazio, Vazio, O},
-			[3]int{Vazio, Vazio, Vazio},
-		}
-	case 30:
-		jogoVelha.tabuleiro = [3][3]int{
-			[3]int{Vazio, Vazio, Vazio},
-			[3]int{X, Vazio, Vazio},
-			[3]int{O, X, Vazio},
-		}
-	case 31:
-		jogoVelha.tabuleiro = [3][3]int{
-			[3]int{Vazio, Vazio, Vazio},
-			[3]int{Vazio, Vazio, O},
-			[3]int{Vazio, O, X},
 		}
 	}
 
@@ -439,15 +281,29 @@ func (self *ticTacToe) getSimboloPosicaoDuasMarcacoesEmSequencia() (simbolo int,
 
 		switch i {
 		case 0:
+			// L linha 0, coluna 0
 			sequencia, posicao = self.getSequenciaPosicao(0, 0)
+			// fmt.Println("L 0 0")
 		case 1:
+			// L linha 0, coluna 2
 			sequencia, posicao = self.getSequenciaPosicao(0, 2)
+			// fmt.Println("L 0 2")
 		case 2:
+			// L linha 2, coluna 2
 			sequencia, posicao = self.getSequenciaPosicao(2, 2)
+			// fmt.Println("L 2 2")
 		case 3:
+			// L linha 2, coluna 0
 			sequencia, posicao = self.getSequenciaPosicao(2, 0)
-		default:
+			// fmt.Println("L 2 0")
+		case 4:
+			// + central
 			sequencia, posicao = self.getSequenciaPosicao(1, 1)
+			// fmt.Println("+ central")
+		case 5:
+			// x diagonal
+			sequencia, posicao = self.getSequenciaPosicao(-1, -1)
+			// fmt.Println("x diagonal")
 		}
 
 		for j := 0; j < len(sequencia); j++ {
@@ -462,19 +318,29 @@ func (self *ticTacToe) getSimboloPosicaoDuasMarcacoesEmSequencia() (simbolo int,
 			}
 		}
 
-		if x == quantSequencia && v == 3 && o == 0 && sequencia[0] == Vazio {
+		if x == quantSequencia && v == 3 && o == 0 {
 			simbolo = X
+			fmt.Println(">>>", i)
 			return
-		} else if o == quantSequencia && v == 3 && x == 0 && sequencia[0] == Vazio {
+		} else if o == quantSequencia && v == 3 && x == 0 {
 			simbolo = O
-			return
-		} else if x == quantSequencia && v == 3 && o == 0 && sequencia[1] == Vazio {
-			simbolo = X
-			return
-		} else if o == quantSequencia && v == 3 && x == 0 && sequencia[1] == Vazio {
-			simbolo = O
+			fmt.Println(">>>", i)
 			return
 		}
+
+		//		if x == quantSequencia && v == 3 && o == 0 && sequencia[0] == Vazio {
+		//			simbolo = X
+		//			return
+		//		} else if o == quantSequencia && v == 3 && x == 0 && sequencia[0] == Vazio {
+		//			simbolo = O
+		//			return
+		//		} else if x == quantSequencia && v == 3 && o == 0 && sequencia[1] == Vazio {
+		//			simbolo = X
+		//			return
+		//		} else if o == quantSequencia && v == 3 && x == 0 && sequencia[1] == Vazio {
+		//			simbolo = O
+		//			return
+		//		}
 
 	}
 
@@ -485,29 +351,78 @@ func (self *ticTacToe) getSimboloPosicaoDuasMarcacoesEmSequencia() (simbolo int,
 func (self *ticTacToe) getSequenciaPosicao(linha int, coluna int) (sequencia []int, posicao [2]int) {
 	var posicoes [][2]int
 
-	s, p := self.getLinha(linha)
-	for k := 0; k < len(s); k++ {
-		sequencia = append(sequencia, s[k])
-		posicoes = append(posicoes, p[k])
-	}
-
-	if linha == 1 && coluna == 1 {
-		s, p = self.getColuna(coluna)
+	if linha == -1 && coluna == -1 {
+		s, p := self.getDiagonal(0)
 		for k := 0; k < len(s); k++ {
-			if k != coluna {
+			sequencia = append(sequencia, s[k])
+			posicoes = append(posicoes, p[k])
+		}
+
+		// retira o elemento duplicado no cruzamento do tipo x
+		s, p = self.getDiagonal(1)
+		for k := 0; k < len(s); k++ {
+			if k != 1 {
 				sequencia = append(sequencia, s[k])
 				posicoes = append(posicoes, p[k])
 			}
 		}
+
+		fmt.Println(sequencia, posicoes) // APAGAR
+
+		// se o centro está vazio
+		if sequencia[1] == Vazio {
+			posicao = posicoes[1]
+		} else {
+			if sequencia[0] == Vazio && sequencia[2] == Vazio {
+				opcoes := []int{0, 2}
+				posicao = posicoes[opcoes[rand.Intn(len(opcoes))]]
+			} else if sequencia[3] == Vazio {
+				posicao = posicoes[3]
+			} else if sequencia[4] == Vazio {
+				posicao = posicoes[4]
+			}
+		}
 	} else {
-		s, p = self.getColuna(coluna)
-		for k := 1; k < len(s); k++ {
+
+		s, p := self.getLinha(linha)
+		for k := 0; k < len(s); k++ {
 			sequencia = append(sequencia, s[k])
 			posicoes = append(posicoes, p[k])
 		}
+
+		// retira o elemento duplicado no cruzamento do tipo...
+		// ... +
+		if linha == 1 && coluna == 1 {
+			s, p = self.getColuna(coluna)
+			for k := 0; k < len(s); k++ {
+				if k != coluna {
+					sequencia = append(sequencia, s[k])
+					posicoes = append(posicoes, p[k])
+				}
+			}
+
+			// .. T
+			//		} else if (linha - coluna) == 1 {
+			//			s, p = self.getColuna(coluna)
+			//			for k := 0; k < len(s); k++ {
+			//				if k == 1 {
+			//					sequencia = append(sequencia, s[k])
+			//					posicoes = append(posicoes, p[k])
+			//				}
+			//			}
+
+			// ... L
+		} else if math.Abs(float64(linha-coluna)) == 2.0 {
+			s, p = self.getColuna(coluna)
+			for k := 1; k < len(s); k++ {
+				sequencia = append(sequencia, s[k])
+				posicoes = append(posicoes, p[k])
+			}
+		}
+
+		posicao = posicoes[coluna]
 	}
 
-	posicao = posicoes[coluna]
 	return
 }
 
