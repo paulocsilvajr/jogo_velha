@@ -4,14 +4,16 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
+	"runtime"
+	"strconv"
 	"time"
 )
 
 var opcoes = []int{0, 1, 2}
 
-func MostraMenuInicial() (opcao int) {
+func MostraMenuInicial() int {
 	for {
-		LimpaTelaLinux()
+		LimpaTela()
 
 		fmt.Println("Bem Vindo!")
 		fmt.Println(opcoes[1], "- Jogador x Jogador")
@@ -19,10 +21,13 @@ func MostraMenuInicial() (opcao int) {
 		fmt.Println(opcoes[0], "- Sair")
 		fmt.Print("\t\t: ")
 
-		_, err := fmt.Scan(&opcao)
+		var entrada string
+		fmt.Scan(&entrada)
+		opcao, err := strconv.Atoi(entrada) // converte entrada(string) para int
 		if err != nil {
 			fmt.Println("Escolha uma das opções do menu")
 			Espere()
+			EnterParaContinuar()
 
 			continue
 		}
@@ -35,6 +40,7 @@ func MostraMenuInicial() (opcao int) {
 
 		fmt.Printf("Opção informada [%d] inválida\n", opcao)
 		Espere()
+		EnterParaContinuar()
 	}
 }
 
@@ -46,10 +52,12 @@ func DefineModoJogo() {
 		case 1:
 			fmt.Println("Jogador x Jogador")
 			tab.Imprime()
-			Espere()
+
+			EnterParaContinuar()
 		case 2:
 			fmt.Println("Jogador x Computador")
-			Espere()
+
+			EnterParaContinuar()
 		default:
 			FimDeJogo()
 			os.Exit(0)
@@ -57,14 +65,31 @@ func DefineModoJogo() {
 	}
 }
 
-func LimpaTelaLinux() {
-	cmd := exec.Command("clear")
+func LimpaTela() {
+	sistema := runtime.GOOS // retorna linux, windows, darwin, ...
+
+	var comando string
+	if sistema == "linux" {
+		comando = "clear"
+	} else if sistema == "windows" {
+		comando = "cls"
+	} else {
+		panic("Plataforma não suportada para limpar a tela")
+	}
+
+	cmd := exec.Command(comando)
 	cmd.Stdout = os.Stdout
 	cmd.Run()
 }
 
 func Espere() {
 	time.Sleep(time.Second)
+}
+
+func EnterParaContinuar() {
+	fmt.Print("\nENTER para continuar ")
+	var temp string
+	fmt.Scanf("%s", &temp)
 }
 
 func FimDeJogo() {
