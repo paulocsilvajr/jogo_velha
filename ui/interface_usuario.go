@@ -45,37 +45,47 @@ func MostraMenuInicial() int {
 	}
 }
 
-func DefineModoJogo() {
-	for {
-		op := MostraMenuInicial()
+func (jogador *Jogador) ExibePontuacao() {
+	var contV, contD int
 
-		switch op {
-		case 1:
-			fmt.Println("Jogador x Jogador")
-			tab.Imprime()
-
-			EnterParaContinuar()
-		case 2:
-			fmt.Println("Jogador x Computador")
-
-			EnterParaContinuar()
-		default:
-			FimDeJogo()
-			os.Exit(0)
-		}
-	}
-}
-
-func ExibePontuacao(jogador *Jogador) {
 	fmt.Println(jogador.nome)
 	for i, vitoria := range jogador.pontuacao {
 		fmt.Printf("Partida %d: ", i+1)
 		if vitoria {
 			fmt.Println("Vitória")
+			contV++
 		} else {
 			fmt.Println("Derrota")
+			contD++
 		}
 	}
+	fmt.Println("Vitórias:", contV, "\nDerrotas:", contD)
+}
+
+func (jogador *Jogador) EscolhaPosicao() (linha, coluna int) {
+	for {
+		fmt.Printf("%s, informe uma \nlinha: ", jogador.nome)
+		fmt.Scanf("%d", &linha)
+		fmt.Print("coluna: ")
+		fmt.Scanf("%d", &coluna)
+
+		linha--
+		coluna--
+		if linha >= 0 && linha < Q && coluna >= 0 && coluna < Q {
+			fmt.Println()
+			return
+		} else {
+			fmt.Println("\nLinha ou coluna inválida\n")
+		}
+	}
+}
+
+func PosicaoOcupada() {
+	fmt.Println("Posição ocupada\n")
+}
+
+func FinalizadoTabuleiro() {
+	fmt.Println("Deu velha\n")
 }
 
 func LimpaTela() {
@@ -87,7 +97,7 @@ func LimpaTela() {
 	} else if sistema == "windows" {
 		comando = "cls"
 	} else {
-		panic("Plataforma não suportada para limpar a tela")
+		panic("Plataforma não suportada para limpeza de tela")
 	}
 
 	cmd := exec.Command(comando)
