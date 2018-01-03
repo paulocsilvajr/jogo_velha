@@ -9,12 +9,22 @@ const (
 	Q     = 3 // Quantidade de elemento no tabuleiro(3x3)
 )
 
-var I = map[int]string{0: " ", 1: "O", 2: "X"} // Representação visual de Vazio, O e X
+var I = map[int]string{0: " ", 1: "X", 2: "O"} // Representação visual de Vazio, X e O
 
 type Tabuleiro [Q][Q]int   // Tipo Tabuleiro, matrix de 3x3
 type PosRelativa [Q][2]int // Posição relativa para linhas, colunas e diagonais
 
+type Jogador struct {
+	nome      string
+	simbolo   int
+	pontuacao []bool
+}
+
+// Variáveis não são acessíveis fora do seu pacote
+// portanto, foi criado gets retornando ponteiros
 var tab Tabuleiro
+var jogador0 Jogador
+var jogador1 Jogador
 
 func init() {
 	tab = [Q][Q]int{
@@ -22,6 +32,24 @@ func init() {
 		[Q]int{Vazio, Vazio, Vazio},
 		[Q]int{Vazio, Vazio, Vazio},
 	}
+
+	jogador0.nome, jogador0.simbolo = "Jogador nº 1", X
+	jogador1.nome, jogador1.simbolo = "Computador", O
+}
+
+func GetTabuleiro() *Tabuleiro {
+	return &tab
+}
+
+func GetJogador(numero int) *Jogador {
+	if numero == 1 {
+		return &jogador1
+	}
+	return &jogador0
+}
+
+func (jogador *Jogador) SetPontuacao(vitoria bool) {
+	jogador.pontuacao = append(jogador.pontuacao, vitoria)
 }
 
 func (tabuleiro *Tabuleiro) Imprime() {
@@ -111,4 +139,12 @@ func (tabuleiro *Tabuleiro) GetDiagonal(posicao int) ([Q]int, PosRelativa) {
 	}
 
 	return diagonalTemp, posicoes
+}
+
+func (tabuleiro *Tabuleiro) MarcaPosicao(jogador *Jogador, linha int, coluna int) bool {
+	if tabuleiro[linha][coluna] == Vazio {
+		tabuleiro[linha][coluna] = jogador.simbolo
+		return true
+	}
+	return false
 }

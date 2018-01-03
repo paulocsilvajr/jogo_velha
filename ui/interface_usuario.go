@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-var opcoes = []int{0, 1, 2}
+var opcoes = []int{0, 1, 2, 3}
 
 func MostraMenuInicial() int {
 	for {
@@ -18,6 +18,7 @@ func MostraMenuInicial() int {
 		fmt.Println("Bem Vindo!")
 		fmt.Println(opcoes[1], "- Jogador x Jogador")
 		fmt.Println(opcoes[2], "- Jogador x Computador")
+		fmt.Println(opcoes[3], "- Pontuação")
 		fmt.Println(opcoes[0], "- Sair")
 		fmt.Print("\t\t: ")
 
@@ -61,6 +62,18 @@ func DefineModoJogo() {
 		default:
 			FimDeJogo()
 			os.Exit(0)
+		}
+	}
+}
+
+func ExibePontuacao(jogador *Jogador) {
+	fmt.Println(jogador.nome)
+	for i, vitoria := range jogador.pontuacao {
+		fmt.Printf("Partida %d: ", i+1)
+		if vitoria {
+			fmt.Println("Vitória")
+		} else {
+			fmt.Println("Derrota")
 		}
 	}
 }
