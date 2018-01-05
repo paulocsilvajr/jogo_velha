@@ -22,6 +22,9 @@ func defineModoJogo() {
 		case 2:
 
 			view.EnterParaContinuar()
+		case 3:
+
+			view.EnterParaContinuar()
 		default:
 			view.FimDeJogo()
 			os.Exit(0)

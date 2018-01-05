@@ -13,6 +13,13 @@ func init() {
 }
 
 func JogaJogadorVsJogador() {
+	// TESTE
+	// c, p := tabuleiro.GetPosicoes()
+	// for i := 0; i < len(p); i++ {
+	// 	fmt.Println(c[i], p[i])
+	// }
+	// TESTE
+
 	maxJogadas := int(math.Pow(model.Q, 2))
 	jogadorAtual := model.GetJogador(0)
 	proximoJogador := model.GetJogador(1)
@@ -35,7 +42,7 @@ func JogaJogadorVsJogador() {
 
 		tabuleiro.Imprime()
 
-		view.Espere()
+		// view.Espere()
 		view.EnterParaContinuar()
 	}
 

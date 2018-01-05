@@ -11,8 +11,11 @@ const (
 
 var I = map[int]string{0: " ", 1: "X", 2: "O"} // Representação visual de Vazio, X e O
 
-type Tabuleiro [Q][Q]int   // Tipo Tabuleiro, matrix de 3x3
-type PosRelativa [Q][2]int // Posição relativa para linhas, colunas e diagonais
+type Tabuleiro [Q][Q]int    // Tipo Tabuleiro, matrix de 3x3
+type PosRelativa [Q][2]int  // Posição relativa para linhas, colunas e diagonais
+type Conjunto [Q]int        // Conjunto representando linha, coluna ou diagonal
+type Conjuntos []Conjunto   // Grupo de conjuntos para agrupar todas as linhas, colunas e diagonal
+type Posicoes []PosRelativa // Grupo de Posições relativas ao grupo de conjuntos
 
 // Variáveis não são acessíveis fora do seu pacote
 // portanto, foi criado gets retornando ponteiros
@@ -58,7 +61,7 @@ func GetSimbolo(valor int) string {
 	}
 }
 
-func (tabuleiro *Tabuleiro) GetLinha(posicao int) ([Q]int, PosRelativa) {
+func (tabuleiro *Tabuleiro) GetLinha(posicao int) (Conjunto, PosRelativa) {
 	var posicoes PosRelativa
 	for i := 0; i < Q; i++ {
 		posicoes[i] = [2]int{posicao, i}
@@ -67,7 +70,7 @@ func (tabuleiro *Tabuleiro) GetLinha(posicao int) ([Q]int, PosRelativa) {
 	return tabuleiro[posicao], posicoes
 }
 
-func (tabuleiro *Tabuleiro) GetColuna(posicao int) ([Q]int, PosRelativa) {
+func (tabuleiro *Tabuleiro) GetColuna(posicao int) (Conjunto, PosRelativa) {
 	var colunaTemp [Q]int
 
 	var posicoes PosRelativa
@@ -86,7 +89,7 @@ func (tabuleiro *Tabuleiro) GetColuna(posicao int) ([Q]int, PosRelativa) {
 	return colunaTemp, posicoes
 }
 
-func (tabuleiro *Tabuleiro) GetDiagonal(posicao int) ([Q]int, PosRelativa) {
+func (tabuleiro *Tabuleiro) GetDiagonal(posicao int) (Conjunto, PosRelativa) {
 	var diagonalTemp [Q]int
 
 	var posicoes PosRelativa
@@ -117,7 +120,6 @@ func (tabuleiro *Tabuleiro) GetDiagonal(posicao int) ([Q]int, PosRelativa) {
 			posicoes[i] = [2]int{i, i}
 		}
 	}
-
 	return diagonalTemp, posicoes
 }
 
@@ -127,4 +129,28 @@ func (tabuleiro *Tabuleiro) MarcaPosicao(jogador *Jogador, linha int, coluna int
 		return true
 	}
 	return false
+}
+
+// GetPosicoes Retorna as linhas, colunas e diagonais juntamente com slice contendo as posições relativas(linha, coluna).
+// Retorno da função são dois slices, portanto é necessário atribuir a duas variáveis para utilizar seu retorno.
+func (tabuleiro *Tabuleiro) GetPosicoes() (conjuntos Conjuntos, posicoes Posicoes) {
+	for i := 0; i < Q; i++ {
+		linha, pos := tabuleiro.GetLinha(i)
+		conjuntos = append(conjuntos, linha)
+		posicoes = append(posicoes, pos)
+	}
+
+	for i := 0; i < Q; i++ {
+		coluna, pos := tabuleiro.GetLinha(i)
+		conjuntos = append(conjuntos, coluna)
+		posicoes = append(posicoes, pos)
+	}
+
+	for i := 0; i < 2; i++ {
+		diagonal, pos := tabuleiro.GetLinha(i)
+		conjuntos = append(conjuntos, diagonal)
+		posicoes = append(posicoes, pos)
+	}
+
+	return
 }
