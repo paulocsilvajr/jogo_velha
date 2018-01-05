@@ -22,6 +22,10 @@ type Posicoes []PosRelativa // Grupo de Posições relativas ao grupo de conjunt
 var tab Tabuleiro
 
 func init() {
+	ZeraTabuleiro()
+}
+
+func ZeraTabuleiro() {
 	tab = [Q][Q]int{
 		[Q]int{Vazio, Vazio, Vazio},
 		[Q]int{Vazio, Vazio, Vazio},
@@ -141,16 +145,45 @@ func (tabuleiro *Tabuleiro) GetPosicoes() (conjuntos Conjuntos, posicoes Posicoe
 	}
 
 	for i := 0; i < Q; i++ {
-		coluna, pos := tabuleiro.GetLinha(i)
+		coluna, pos := tabuleiro.GetColuna(i)
 		conjuntos = append(conjuntos, coluna)
 		posicoes = append(posicoes, pos)
 	}
 
 	for i := 0; i < 2; i++ {
-		diagonal, pos := tabuleiro.GetLinha(i)
+		diagonal, pos := tabuleiro.GetDiagonal(i)
 		conjuntos = append(conjuntos, diagonal)
 		posicoes = append(posicoes, pos)
 	}
 
 	return
+}
+
+func (tabuleiro *Tabuleiro) Vitoria() (jogador *Jogador) {
+	conjuntos, _ := tabuleiro.GetPosicoes()
+
+	for i := 0; i < len(conjuntos); i++ {
+		x, o := 0, 0
+
+		conjunto := conjuntos[i]
+		for j := 0; j < len(conjunto); j++ {
+			switch conjunto[j] {
+			case X:
+				x++
+			case O:
+				o++
+			}
+
+			if x == 3 {
+				jogador = GetJogadorPorSimbolo(X)
+				return
+			} else if o == 3 {
+				jogador = GetJogadorPorSimbolo(O)
+				return
+			}
+		}
+
+	}
+
+	return nil
 }

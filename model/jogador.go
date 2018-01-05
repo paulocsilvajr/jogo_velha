@@ -6,21 +6,30 @@ type Jogador struct {
 	Pontuacao []bool
 }
 
-// Variáveis não são acessíveis fora do seu pacote
-// portanto, foi criado gets retornando ponteiros
-var jogador0 Jogador
-var jogador1 Jogador
+type Jogadores []Jogador
 
-func init() {
-	jogador0.Nome, jogador0.Simbolo = "Jogador nº 1", X
-	jogador1.Nome, jogador1.Simbolo = "Computador", O
+var listaJogadores Jogadores
+
+func AddJogador(jogador Jogador) {
+	listaJogadores = append(listaJogadores, jogador)
 }
 
 func GetJogador(numero int) *Jogador {
-	if numero == 1 {
-		return &jogador1
+	return &listaJogadores[numero]
+}
+
+// GetJogadorPorSimbolo retorna um *Jogador de acordo com simbolo informado
+func GetJogadorPorSimbolo(simbolo int) *Jogador {
+	for _, jogador := range listaJogadores {
+		if jogador.Simbolo == simbolo {
+			return &jogador
+		}
 	}
-	return &jogador0
+	return nil
+}
+
+func GetJogadores() Jogadores {
+	return listaJogadores
 }
 
 func (jogador *Jogador) SetPontuacao(vitoria bool) {

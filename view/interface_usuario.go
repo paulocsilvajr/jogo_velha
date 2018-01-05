@@ -60,7 +60,14 @@ func ExibePontuacao(jogador *model.Jogador) {
 			contD++
 		}
 	}
-	fmt.Println("Vitórias:", contV, "\nDerrotas:", contD)
+	fmt.Println("Vitórias:", contV, "\nDerrotas:", contD, "\n")
+}
+
+func ExibePontuacaoGeral() {
+	jogadores := model.GetJogadores()
+	for _, jogador := range jogadores {
+		ExibePontuacao(&jogador)
+	}
 }
 
 func EscolhaPosicao(jogador *model.Jogador) (linha, coluna int) {
@@ -91,6 +98,10 @@ func PosicaoOcupada() {
 
 func FinalizadoTabuleiro() {
 	fmt.Println("Deu velha\n")
+}
+
+func Vitoria(jogador *model.Jogador) {
+	fmt.Println("Vitória de", jogador.Nome, "\n")
 }
 
 func LimpaTela() {

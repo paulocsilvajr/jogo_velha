@@ -23,7 +23,9 @@ func JogaJogadorVsJogador() {
 	maxJogadas := int(math.Pow(model.Q, 2))
 	jogadorAtual := model.GetJogador(0)
 	proximoJogador := model.GetJogador(1)
+	model.ZeraTabuleiro()
 
+	var jogador *model.Jogador
 	for i := 0; i < maxJogadas; i++ {
 		view.LimpaTela()
 		view.ImprimeTabuleiro(tabuleiro)
@@ -38,14 +40,28 @@ func JogaJogadorVsJogador() {
 			}
 		}
 
+		jogador = tabuleiro.Vitoria()
+		if jogador != nil {
+			jogadorAtual.SetPontuacao(true)
+			proximoJogador.SetPontuacao(false)
+
+			break
+		}
+
 		jogadorAtual, proximoJogador = proximoJogador, jogadorAtual
 
-		tabuleiro.Imprime()
+		view.ImprimeTabuleiro(tabuleiro)
 
 		// view.Espere()
 		view.EnterParaContinuar()
 	}
 
-	view.FinalizadoTabuleiro()
+	if jogador != nil {
+		view.Vitoria(jogador)
+	} else {
+		view.FinalizadoTabuleiro()
+	}
 
+	view.ExibePontuacao(jogadorAtual)
+	view.ExibePontuacao(proximoJogador)
 }
