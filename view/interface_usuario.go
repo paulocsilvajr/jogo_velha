@@ -1,7 +1,8 @@
-package ui
+package view
 
 import (
 	"fmt"
+	"jogo_velha/model"
 	"os"
 	"os/exec"
 	"runtime"
@@ -45,11 +46,11 @@ func MostraMenuInicial() int {
 	}
 }
 
-func (jogador *Jogador) ExibePontuacao() {
+func ExibePontuacao(jogador *model.Jogador) {
 	var contV, contD int
 
-	fmt.Println(jogador.nome)
-	for i, vitoria := range jogador.pontuacao {
+	fmt.Println(jogador.Nome)
+	for i, vitoria := range jogador.Pontuacao {
 		fmt.Printf("Partida %d: ", i+1)
 		if vitoria {
 			fmt.Println("Vitória")
@@ -62,22 +63,26 @@ func (jogador *Jogador) ExibePontuacao() {
 	fmt.Println("Vitórias:", contV, "\nDerrotas:", contD)
 }
 
-func (jogador *Jogador) EscolhaPosicao() (linha, coluna int) {
+func EscolhaPosicao(jogador *model.Jogador) (linha, coluna int) {
 	for {
-		fmt.Printf("%s, informe uma \nlinha: ", jogador.nome)
+		fmt.Printf("%s, informe uma \nlinha: ", jogador.Nome)
 		fmt.Scanf("%d", &linha)
 		fmt.Print("coluna: ")
 		fmt.Scanf("%d", &coluna)
 
 		linha--
 		coluna--
-		if linha >= 0 && linha < Q && coluna >= 0 && coluna < Q {
+		if linha >= 0 && linha < model.Q && coluna >= 0 && coluna < model.Q {
 			fmt.Println()
 			return
 		} else {
 			fmt.Println("\nLinha ou coluna inválida\n")
 		}
 	}
+}
+
+func ImprimeTabuleiro(tabuleiro *model.Tabuleiro) {
+	fmt.Println(tabuleiro.Imprime())
 }
 
 func PosicaoOcupada() {

@@ -2,7 +2,7 @@ package main
 
 import (
 	"jogo_velha/jogo"
-	"jogo_velha/ui"
+	"jogo_velha/view"
 	"os"
 )
 
@@ -12,18 +12,18 @@ func main() {
 
 func defineModoJogo() {
 	for {
-		op := ui.MostraMenuInicial()
+		op := view.MostraMenuInicial()
 
 		switch op {
 		case 1:
 			jogo.JogaJogadorVsJogador()
 
-			ui.EnterParaContinuar()
+			view.EnterParaContinuar()
 		case 2:
 
-			ui.EnterParaContinuar()
+			view.EnterParaContinuar()
 		default:
-			ui.FimDeJogo()
+			view.FimDeJogo()
 			os.Exit(0)
 		}
 	}

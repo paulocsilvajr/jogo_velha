@@ -1,32 +1,33 @@
 package jogo
 
 import (
-	"jogo_velha/ui"
+	"jogo_velha/model"
+	"jogo_velha/view"
 	"math"
 )
 
-var tabuleiro *ui.Tabuleiro
+var tabuleiro *model.Tabuleiro
 
 func init() {
-	tabuleiro = ui.GetTabuleiro()
+	tabuleiro = model.GetTabuleiro()
 }
 
 func JogaJogadorVsJogador() {
-	maxJogadas := int(math.Pow(ui.Q, 2))
-	jogadorAtual := ui.GetJogador(0)
-	proximoJogador := ui.GetJogador(1)
+	maxJogadas := int(math.Pow(model.Q, 2))
+	jogadorAtual := model.GetJogador(0)
+	proximoJogador := model.GetJogador(1)
 
 	for i := 0; i < maxJogadas; i++ {
-		ui.LimpaTela()
-		tabuleiro.Imprime()
+		view.LimpaTela()
+		view.ImprimeTabuleiro(tabuleiro)
 
 		for {
-			linha, coluna := jogadorAtual.EscolhaPosicao()
+			linha, coluna := view.EscolhaPosicao(jogadorAtual)
 
 			if tabuleiro.MarcaPosicao(jogadorAtual, linha, coluna) {
 				break
 			} else {
-				ui.PosicaoOcupada()
+				view.PosicaoOcupada()
 			}
 		}
 
@@ -34,10 +35,10 @@ func JogaJogadorVsJogador() {
 
 		tabuleiro.Imprime()
 
-		ui.Espere()
-		ui.EnterParaContinuar()
+		view.Espere()
+		view.EnterParaContinuar()
 	}
 
-	ui.FinalizadoTabuleiro()
+	view.FinalizadoTabuleiro()
 
 }
