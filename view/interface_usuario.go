@@ -66,7 +66,7 @@ func ExibePontuacao(jogador *model.Jogador) {
 func ExibePontuacaoGeral() {
 	jogadores := model.GetJogadores()
 	for _, jogador := range jogadores {
-		ExibePontuacao(&jogador)
+		ExibePontuacao(jogador)
 	}
 }
 

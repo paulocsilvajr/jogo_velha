@@ -6,23 +6,27 @@ type Jogador struct {
 	Pontuacao []bool
 }
 
-type Jogadores []Jogador
+// Type Jogadores é um slice de ponteiros de Jogador
+type Jogadores []*Jogador
 
 var listaJogadores Jogadores
 
-func AddJogador(jogador Jogador) {
+func AddJogador(jogador *Jogador) {
 	listaJogadores = append(listaJogadores, jogador)
 }
 
 func GetJogador(numero int) *Jogador {
-	return &listaJogadores[numero]
+	jogador := listaJogadores[numero]
+	// &*nomeVar retorna o endereço apontado pelo *ponteiro
+	// jogador é um ponteiro de ponteiro, **ponteiro
+	return &*jogador
 }
 
 // GetJogadorPorSimbolo retorna um *Jogador de acordo com simbolo informado
 func GetJogadorPorSimbolo(simbolo int) *Jogador {
 	for _, jogador := range listaJogadores {
 		if jogador.Simbolo == simbolo {
-			return &jogador
+			return &*jogador
 		}
 	}
 	return nil

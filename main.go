@@ -14,8 +14,8 @@ func init() {
 	jogador0.Nome, jogador0.Simbolo = "Jogador nº 1", model.X
 	jogador1.Nome, jogador1.Simbolo = "Jogador nº 2", model.O
 
-	model.AddJogador(jogador0)
-	model.AddJogador(jogador1)
+	model.AddJogador(&jogador0)
+	model.AddJogador(&jogador1)
 }
 
 func main() {
@@ -35,6 +35,8 @@ func defineModoJogo() {
 
 			view.EnterParaContinuar()
 		case 3:
+			view.LimpaTela()
+
 			view.ExibePontuacaoGeral()
 
 			view.EnterParaContinuar()
