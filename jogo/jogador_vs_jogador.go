@@ -7,22 +7,16 @@ import (
 )
 
 var tabuleiro *model.Tabuleiro
+var primeiro, segundo int = 0, 1
 
 func init() {
 	tabuleiro = model.GetTabuleiro()
 }
 
 func JogaJogadorVsJogador() {
-	// TESTE
-	// c, p := tabuleiro.GetPosicoes()
-	// for i := 0; i < len(p); i++ {
-	// 	fmt.Println(c[i], p[i])
-	// }
-	// TESTE
-
 	maxJogadas := int(math.Pow(model.Q, 2))
-	jogadorAtual := model.GetJogador(0)
-	proximoJogador := model.GetJogador(1)
+	jogadorAtual := model.GetJogador(primeiro)
+	proximoJogador := model.GetJogador(segundo)
 	model.ZeraTabuleiro()
 
 	var jogador *model.Jogador
@@ -61,6 +55,8 @@ func JogaJogadorVsJogador() {
 	} else {
 		view.FinalizadoTabuleiro()
 	}
+
+	primeiro, segundo = segundo, primeiro
 
 	view.ExibePontuacao(jogadorAtual)
 	view.ExibePontuacao(proximoJogador)

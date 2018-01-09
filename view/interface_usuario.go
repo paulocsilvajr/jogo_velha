@@ -101,6 +101,7 @@ func FinalizadoTabuleiro() {
 }
 
 func Vitoria(jogador *model.Jogador) {
+	LimpaTela()
 	fmt.Println("Vitória de", jogador.Nome, "\n")
 }
 

@@ -39,3 +39,7 @@ func GetJogadores() Jogadores {
 func (jogador *Jogador) SetPontuacao(vitoria bool) {
 	jogador.Pontuacao = append(jogador.Pontuacao, vitoria)
 }
+
+func (jogador *Jogador) ResetaPontuacao() {
+	jogador.Pontuacao = []bool{}
+}
