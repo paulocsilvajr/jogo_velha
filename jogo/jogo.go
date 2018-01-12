@@ -6,6 +6,9 @@ import (
 	"math"
 )
 
+var tabuleiro *model.Tabuleiro
+var primeiro, segundo int = 0, 1
+
 func Jogar(jogada_esp func(jogador *model.Jogador)) {
 	maxJogadas := int(math.Pow(model.Q, 2))
 	jogadorAtual := model.GetJogador(primeiro)

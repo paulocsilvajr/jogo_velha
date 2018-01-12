@@ -3,6 +3,7 @@ package model
 type Jogador struct {
 	Nome      string
 	Simbolo   int
+	Humano    bool
 	Pontuacao []bool
 }
 
@@ -42,4 +43,8 @@ func (jogador *Jogador) SetPontuacao(vitoria bool) {
 
 func (jogador *Jogador) ResetaPontuacao() {
 	jogador.Pontuacao = []bool{}
+}
+
+func (jogador *Jogador) EhComputador() bool {
+	return !jogador.Humano
 }

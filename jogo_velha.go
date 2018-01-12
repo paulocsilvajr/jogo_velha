@@ -13,7 +13,7 @@ var jogador1 model.Jogador
 var partida int
 
 func init() {
-	jogador0.Nome, jogador0.Simbolo = "Jogador nº 1", model.X
+	jogador0.Nome, jogador0.Simbolo, jogador0.Humano = "Jogador nº 1", model.X, true
 	jogador1.Simbolo = model.O
 
 	model.AddJogador(&jogador0)
@@ -30,23 +30,9 @@ func defineModoJogo() {
 
 		switch op {
 		case 1:
-			resetaPontuacao(2)
-
-			partida = op
-
-			jogador1.Nome = "Jogador nº 2"
-
-			jogo.JogaJogadorVsJogador()
-
-			view.EnterParaContinuar()
+			jogada(op, "Jogador nº 2", true)
 		case 2:
-			resetaPontuacao(1)
-
-			partida = op
-
-			jogador1.Nome = "Computador"
-
-			view.EnterParaContinuar()
+			jogada(op, "Computador", false)
 		case 3:
 			view.LimpaTela()
 
@@ -60,8 +46,21 @@ func defineModoJogo() {
 	}
 }
 
-func resetaPontuacao(partida int) {
-	if partida == 1 {
+func jogada(op int, nomeJogador1 string, ehHumano bool) {
+	resetaPontuacao(op)
+
+	partida = op
+
+	jogador1.Nome = nomeJogador1
+	jogador1.Humano = ehHumano
+
+	jogo.JogaJogadorVsComputador()
+
+	view.EnterParaContinuar()
+}
+
+func resetaPontuacao(partidaEscolhida int) {
+	if partidaEscolhida != partida {
 		jogador0.ResetaPontuacao()
 		jogador1.ResetaPontuacao()
 	}

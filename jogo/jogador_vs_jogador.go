@@ -5,18 +5,18 @@ import (
 	"jogo_velha/view"
 )
 
-var tabuleiro *model.Tabuleiro
-var primeiro, segundo int = 0, 1
+// var tabuleiro *model.Tabuleiro
+// var primeiro, segundo int = 0, 1
 
 func init() {
 	tabuleiro = model.GetTabuleiro()
 }
 
 func JogaJogadorVsJogador() {
-	Jogar(marcaPosicaoJogador)
+	Jogar(marcaPosicaoJogadorVsJogador)
 }
 
-func marcaPosicaoJogador(jogadorAtual *model.Jogador) {
+func marcaPosicaoJogadorVsJogador(jogadorAtual *model.Jogador) {
 	for {
 		linha, coluna := view.EscolhaPosicao(jogadorAtual)
 
