@@ -72,7 +72,7 @@ func ExibePontuacaoGeral() {
 
 func EscolhaPosicao(jogador *model.Jogador) (linha, coluna int) {
 	for {
-		fmt.Printf("%s, informe uma \nlinha: ", jogador.Nome)
+		fmt.Printf("%s [ %s ], informe uma \nlinha: ", jogador.Nome, model.GetSimbolo(model.Elemento(jogador.Simbolo)))
 		fmt.Scanf("%d", &linha)
 		fmt.Print("coluna: ")
 		fmt.Scanf("%d", &coluna)

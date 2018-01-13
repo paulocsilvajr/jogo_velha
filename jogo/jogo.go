@@ -1,6 +1,7 @@
 package jogo
 
 import (
+	"fmt"
 	"jogo_velha/model"
 	"jogo_velha/view"
 	"math"
@@ -20,8 +21,16 @@ func Jogar(jogada_esp func(jogador *model.Jogador)) {
 		view.LimpaTela()
 		view.ImprimeTabuleiro(tabuleiro)
 
+		// TESTE // TESTE // TESTE //
+		fmt.Println(tabuleiro.GetElementosVazios())
+		// TESTE // TESTE // TESTE //
+
+		// função específica para cada tipo de partida:
+		// jogadorVsJogador ou jogadorVsComputador
 		jogada_esp(jogadorAtual)
 
+		// verificação de ocorreu vitória, caso afirmativo
+		// marca pontuação para jogadores
 		jogador = tabuleiro.Vitoria()
 		if jogador != nil {
 			jogadorAtual.SetPontuacao(true)

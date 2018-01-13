@@ -2,6 +2,16 @@ package model
 
 import "fmt"
 
+type Elemento int                     // Elemento de uma posição do tabuleiro
+type Posicao [2]int                   // Posição de um elemento [linha, coluna]
+type Tabuleiro [Q][Q]Elemento         // Tipo Tabuleiro, matrix de 3x3
+type PosRelativa [Q]Posicao           // Posição relativa para linhas, colunas e diagonais
+type Conjunto [Q]Elemento             // Conjunto representando linha, coluna ou diagonal
+type Conjuntos []Conjunto             // Grupo de conjuntos para agrupar todas as linhas, colunas e diagonal
+type Posicoes []PosRelativa           // Grupo de Posições relativas ao grupo de conjuntos
+type ElementosSimples [Q * Q]Elemento // Conjuntos de todos os elementos do tabuleiro
+type PosicoesSimples [Q * Q]Posicao   // Posicões de todos os elementos do tabuleiro
+
 const (
 	Vazio = 0
 	X     = 1
@@ -9,13 +19,7 @@ const (
 	Q     = 3 // Quantidade de elemento no tabuleiro(3x3)
 )
 
-var I = map[int]string{0: " ", 1: "X", 2: "O"} // Representação visual de Vazio, X e O
-
-type Tabuleiro [Q][Q]int    // Tipo Tabuleiro, matrix de 3x3
-type PosRelativa [Q][2]int  // Posição relativa para linhas, colunas e diagonais
-type Conjunto [Q]int        // Conjunto representando linha, coluna ou diagonal
-type Conjuntos []Conjunto   // Grupo de conjuntos para agrupar todas as linhas, colunas e diagonal
-type Posicoes []PosRelativa // Grupo de Posições relativas ao grupo de conjuntos
+var I = map[int]string{Vazio: " ", X: "X", O: "O"} // Representação visual de Vazio, X e O
 
 // Variáveis não são acessíveis fora do seu pacote
 // portanto, foi criado gets retornando ponteiros
@@ -26,10 +30,10 @@ func init() {
 }
 
 func ZeraTabuleiro() {
-	tab = [Q][Q]int{
-		[Q]int{Vazio, Vazio, Vazio},
-		[Q]int{Vazio, Vazio, Vazio},
-		[Q]int{Vazio, Vazio, Vazio},
+	tab = [Q][Q]Elemento{
+		[Q]Elemento{Vazio, Vazio, Vazio},
+		[Q]Elemento{Vazio, Vazio, Vazio},
+		[Q]Elemento{Vazio, Vazio, Vazio},
 	}
 }
 
@@ -54,32 +58,32 @@ func (tabuleiro *Tabuleiro) Imprime() (impressao string) {
 	return
 }
 
-func GetSimbolo(valor int) string {
+func GetSimbolo(valor Elemento) string {
 	switch valor {
 	case O:
-		return I[valor]
+		return I[int(valor)]
 	case X:
-		return I[valor]
+		return I[int(valor)]
 	default:
-		return I[0]
+		return I[int(0)]
 	}
 }
 
 func (tabuleiro *Tabuleiro) GetLinha(posicao int) (Conjunto, PosRelativa) {
 	var posicoes PosRelativa
 	for i := 0; i < Q; i++ {
-		posicoes[i] = [2]int{posicao, i}
+		posicoes[i] = Posicao{posicao, i}
 	}
 
 	return tabuleiro[posicao], posicoes
 }
 
 func (tabuleiro *Tabuleiro) GetColuna(posicao int) (Conjunto, PosRelativa) {
-	var colunaTemp [Q]int
+	var colunaTemp [Q]Elemento
 
 	var posicoes PosRelativa
 	for i := 0; i < Q; i++ {
-		posicoes[i] = [2]int{i, posicao}
+		posicoes[i] = Posicao{i, posicao}
 	}
 
 	for i, linha := range tabuleiro {
@@ -94,7 +98,7 @@ func (tabuleiro *Tabuleiro) GetColuna(posicao int) (Conjunto, PosRelativa) {
 }
 
 func (tabuleiro *Tabuleiro) GetDiagonal(posicao int) (Conjunto, PosRelativa) {
-	var diagonalTemp [Q]int
+	var diagonalTemp [Q]Elemento
 
 	var posicoes PosRelativa
 
@@ -109,7 +113,7 @@ func (tabuleiro *Tabuleiro) GetDiagonal(posicao int) (Conjunto, PosRelativa) {
 		col := Q
 		for i := 0; i <= 2; i++ {
 			col--
-			posicoes[i] = [2]int{i, col}
+			posicoes[i] = Posicao{i, col}
 		}
 
 	} else {
@@ -121,7 +125,7 @@ func (tabuleiro *Tabuleiro) GetDiagonal(posicao int) (Conjunto, PosRelativa) {
 		}
 
 		for i := 0; i < Q; i++ {
-			posicoes[i] = [2]int{i, i}
+			posicoes[i] = Posicao{i, i}
 		}
 	}
 	return diagonalTemp, posicoes
@@ -129,7 +133,7 @@ func (tabuleiro *Tabuleiro) GetDiagonal(posicao int) (Conjunto, PosRelativa) {
 
 func (tabuleiro *Tabuleiro) MarcaPosicao(jogador *Jogador, linha int, coluna int) bool {
 	if tabuleiro[linha][coluna] == Vazio {
-		tabuleiro[linha][coluna] = jogador.Simbolo
+		tabuleiro[linha][coluna] = Elemento(jogador.Simbolo)
 		return true
 	}
 	return false
@@ -156,6 +160,30 @@ func (tabuleiro *Tabuleiro) GetPosicoes() (conjuntos Conjuntos, posicoes Posicoe
 		posicoes = append(posicoes, pos)
 	}
 
+	return
+}
+
+func (tabuleiro *Tabuleiro) GetElementos() (elementos ElementosSimples, posicoes PosicoesSimples) {
+	cont := 0
+	for i := range tabuleiro {
+		for j := range tabuleiro[i] {
+			elementos[cont] = tabuleiro[i][j]
+			posicoes[cont] = Posicao{i, j}
+			cont++
+		}
+	}
+	return
+}
+
+func (tabuleiro *Tabuleiro) GetElementosVazios() (elementos []Elemento, posicoes []Posicao) {
+	e, p := tabuleiro.GetElementos()
+	length := len(e)
+	for i := 0; i < length; i++ {
+		if e[i] == Vazio {
+			elementos = append(elementos, e[i])
+			posicoes = append(posicoes, p[i])
+		}
+	}
 	return
 }
 
