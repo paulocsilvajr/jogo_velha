@@ -1,15 +1,13 @@
 package jogo
 
 import (
-	"fmt"
 	"jogo_velha/model"
 	"jogo_velha/view"
+	"math/rand"
 )
 
-// var tabuleiro *model.Tabuleiro
-// var primeiro, segundo int = 0, 1
-
 func init() {
+	// inicialização de tabuleiro declarado em jogo.go(package jogo)
 	tabuleiro = model.GetTabuleiro()
 }
 
@@ -20,7 +18,7 @@ func JogaJogadorVsComputador() {
 func marcaPosicaoJogadorVsComputador(jogadorAtual *model.Jogador) {
 	for {
 		if jogadorAtual.EhComputador() {
-			fmt.Println("Jogada computador")
+			marcaJogadaComputador(jogadorAtual)
 			break
 		} else {
 			linha, coluna := view.EscolhaPosicao(jogadorAtual)
@@ -32,4 +30,20 @@ func marcaPosicaoJogadorVsComputador(jogadorAtual *model.Jogador) {
 			}
 		}
 	}
+}
+
+func marcaJogadaComputador(jogador *model.Jogador) {
+	posicao := retornaPosicaoVazia()
+	linha, coluna := posicao[0], posicao[1]
+
+	view.EscolhaComputador(jogador, linha, coluna)
+	//fmt.Printf("linha: %d\ncoluna:%d\n\n", linha, coluna)
+	tabuleiro.MarcaPosicao(jogador, linha, coluna)
+	view.Espere()
+}
+
+func retornaPosicaoVazia() model.Posicao {
+	_, posicoes := tabuleiro.GetElementosVazios()
+	posicaoAleatoria := rand.Intn(len(posicoes))
+	return posicoes[posicaoAleatoria]
 }

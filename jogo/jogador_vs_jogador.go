@@ -5,10 +5,8 @@ import (
 	"jogo_velha/view"
 )
 
-// var tabuleiro *model.Tabuleiro
-// var primeiro, segundo int = 0, 1
-
 func init() {
+	// inicialização de tabuleiro declarado em jogo.go(package jogo)
 	tabuleiro = model.GetTabuleiro()
 }
 

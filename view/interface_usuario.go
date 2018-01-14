@@ -72,7 +72,9 @@ func ExibePontuacaoGeral() {
 
 func EscolhaPosicao(jogador *model.Jogador) (linha, coluna int) {
 	for {
-		fmt.Printf("%s [ %s ], informe uma \nlinha: ", jogador.Nome, model.GetSimbolo(model.Elemento(jogador.Simbolo)))
+		fmt.Printf("%s [ %s ], informe uma \nlinha:  ",
+			jogador.Nome,
+			model.GetSimbolo(model.Elemento(jogador.Simbolo)))
 		fmt.Scanf("%d", &linha)
 		fmt.Print("coluna: ")
 		fmt.Scanf("%d", &coluna)
@@ -86,6 +88,16 @@ func EscolhaPosicao(jogador *model.Jogador) (linha, coluna int) {
 			fmt.Println("\nLinha ou coluna inválida\n")
 		}
 	}
+}
+
+func EscolhaComputador(jogador *model.Jogador, linha int, coluna int) {
+	linha++
+	coluna++
+	fmt.Printf("%s [ %s ], informou uma \nlinha:  %d\ncoluna: %d\n\n",
+		jogador.Nome,
+		model.GetSimbolo(model.Elemento(jogador.Simbolo)),
+		linha,
+		coluna)
 }
 
 func ImprimeTabuleiro(tabuleiro *model.Tabuleiro) {

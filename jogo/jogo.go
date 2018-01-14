@@ -1,7 +1,6 @@
 package jogo
 
 import (
-	"fmt"
 	"jogo_velha/model"
 	"jogo_velha/view"
 	"math"
@@ -20,10 +19,6 @@ func Jogar(jogada_esp func(jogador *model.Jogador)) {
 	for i := 0; i < maxJogadas; i++ {
 		view.LimpaTela()
 		view.ImprimeTabuleiro(tabuleiro)
-
-		// TESTE // TESTE // TESTE //
-		fmt.Println(tabuleiro.GetElementosVazios())
-		// TESTE // TESTE // TESTE //
 
 		// função específica para cada tipo de partida:
 		// jogadorVsJogador ou jogadorVsComputador

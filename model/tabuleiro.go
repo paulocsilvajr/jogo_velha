@@ -19,7 +19,7 @@ const (
 	Q     = 3 // Quantidade de elemento no tabuleiro(3x3)
 )
 
-var I = map[int]string{Vazio: " ", X: "X", O: "O"} // Representação visual de Vazio, X e O
+var I = map[int]string{Vazio: " ", X: "x", O: "o"} // Representação visual de Vazio, X e O
 
 // Variáveis não são acessíveis fora do seu pacote
 // portanto, foi criado gets retornando ponteiros
