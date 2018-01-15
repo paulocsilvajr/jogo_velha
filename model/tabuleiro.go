@@ -163,6 +163,8 @@ func (tabuleiro *Tabuleiro) GetPosicoes() (conjuntos Conjuntos, posicoes Posicoe
 	return
 }
 
+// GetElementos retorna todos os elementos do tabuleiro em um array(elementos) de 9 posições, juntamente com
+// outro array(posicoes) com tamanho semelhante, mas contendo em cada posição as posições relativas(linha, coluna) de cada elemento
 func (tabuleiro *Tabuleiro) GetElementos() (elementos ElementosSimples, posicoes PosicoesSimples) {
 	cont := 0
 	for i := range tabuleiro {

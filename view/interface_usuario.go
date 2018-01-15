@@ -7,6 +7,7 @@ import (
 	"os/exec"
 	"runtime"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -49,18 +50,23 @@ func MostraMenuInicial() int {
 func ExibePontuacao(jogador *model.Jogador) {
 	var contV, contD int
 
-	fmt.Println(jogador.Nome)
-	for i, vitoria := range jogador.Pontuacao {
-		fmt.Printf("Partida %d: ", i+1)
-		if vitoria {
-			fmt.Println("Vitória")
-			contV++
-		} else {
-			fmt.Println("Derrota")
-			contD++
+	if len(jogador.Pontuacao) > 0 {
+		fmt.Println(strings.ToUpper(jogador.Nome))
+
+		for i, vitoria := range jogador.Pontuacao {
+			fmt.Printf("Partida %d: ", i+1)
+
+			if vitoria {
+				fmt.Println("Vitória")
+				contV++
+			} else {
+				fmt.Println("Derrota")
+				contD++
+			}
 		}
+
+		fmt.Println("Vitórias:", contV, "\nDerrotas:", contD, "\n")
 	}
-	fmt.Println("Vitórias:", contV, "\nDerrotas:", contD, "\n")
 }
 
 func ExibePontuacaoGeral() {
@@ -73,7 +79,7 @@ func ExibePontuacaoGeral() {
 func EscolhaPosicao(jogador *model.Jogador) (linha, coluna int) {
 	for {
 		fmt.Printf("%s [ %s ], informe uma \nlinha:  ",
-			jogador.Nome,
+			strings.ToUpper(jogador.Nome),
 			model.GetSimbolo(model.Elemento(jogador.Simbolo)))
 		fmt.Scanf("%d", &linha)
 		fmt.Print("coluna: ")
@@ -90,11 +96,12 @@ func EscolhaPosicao(jogador *model.Jogador) (linha, coluna int) {
 	}
 }
 
-func EscolhaComputador(jogador *model.Jogador, linha int, coluna int) {
+func EscolhaComputador(jogador *model.Jogador, linha int, coluna int, tipo string) {
 	linha++
 	coluna++
-	fmt.Printf("%s [ %s ], informou uma \nlinha:  %d\ncoluna: %d\n\n",
-		jogador.Nome,
+	fmt.Printf("::%s:: %s [ %s ], informou uma \nlinha:  %d\ncoluna: %d\n\n",
+		tipo,
+		strings.ToUpper(jogador.Nome),
 		model.GetSimbolo(model.Elemento(jogador.Simbolo)),
 		linha,
 		coluna)
@@ -109,6 +116,7 @@ func PosicaoOcupada() {
 }
 
 func FinalizadoTabuleiro() {
+	LimpaTela()
 	fmt.Println("Deu velha\n")
 }
 

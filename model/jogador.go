@@ -2,7 +2,7 @@ package model
 
 type Jogador struct {
 	Nome      string
-	Simbolo   int
+	Simbolo   Elemento
 	Humano    bool
 	Pontuacao []bool
 }
@@ -26,7 +26,7 @@ func GetJogador(numero int) *Jogador {
 // GetJogadorPorSimbolo retorna um *Jogador de acordo com simbolo informado
 func GetJogadorPorSimbolo(simbolo int) *Jogador {
 	for _, jogador := range listaJogadores {
-		if jogador.Simbolo == simbolo {
+		if jogador.Simbolo == Elemento(simbolo) {
 			return &*jogador
 		}
 	}
@@ -47,4 +47,14 @@ func (jogador *Jogador) ResetaPontuacao() {
 
 func (jogador *Jogador) EhComputador() bool {
 	return !jogador.Humano
+}
+
+func (jogador *Jogador) GetSimboloAdversario() (simbolo Elemento) {
+	switch jogador.Simbolo {
+	case X:
+		simbolo = Elemento(O)
+	case O:
+		simbolo = Elemento(X)
+	}
+	return
 }
