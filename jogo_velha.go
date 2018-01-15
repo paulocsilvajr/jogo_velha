@@ -33,9 +33,9 @@ func defineModoJogo() {
 
 		switch op {
 		case 1:
-			jogada(op, "Jogador nº 2", true)
+			jogada(op, "Jogador nº 2", true, jogo.JogaJogadorVsJogador)
 		case 2:
-			jogada(op, "Computador", false)
+			jogada(op, "Computador", false, jogo.JogaJogadorVsComputador)
 		case 3:
 			view.LimpaTela()
 
@@ -49,7 +49,7 @@ func defineModoJogo() {
 	}
 }
 
-func jogada(op int, nomeJogador1 string, ehHumano bool) {
+func jogada(op int, nomeJogador1 string, ehHumano bool, joga func()) {
 	resetaPontuacao(op)
 
 	partida = op
@@ -57,11 +57,12 @@ func jogada(op int, nomeJogador1 string, ehHumano bool) {
 	jogador1.Nome = nomeJogador1
 	jogador1.Humano = ehHumano
 
-	if op == 1 {
-		jogo.JogaJogadorVsJogador()
-	} else {
-		jogo.JogaJogadorVsComputador()
-	}
+	// if op == 1 {
+	// 	jogo.JogaJogadorVsJogador()
+	// } else {
+	// 	jogo.JogaJogadorVsComputador()
+	// }
+	joga()
 
 	view.EnterParaContinuar()
 }
