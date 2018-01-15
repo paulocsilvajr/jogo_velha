@@ -4,7 +4,7 @@
 Este repositório contém um exemplo de jogo da velha desenvolvido em Go.
 
 ### Pré-requisitos
-Instalar a linguadem [Go](https://golang.org/dl/) e seguir os [passos](https://golang.org/doc/install) para adicionar o binário ao PATH do sistema.
+Instalar a linguagem [Go](https://golang.org/dl/) e seguir os [passos](https://golang.org/doc/install) para adicionar o binário ao PATH do sistema.
 
 ### Arquivos
 
