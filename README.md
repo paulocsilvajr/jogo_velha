@@ -6,10 +6,9 @@ Este repositório contém um exemplo de jogo da velha desenvolvido em Go.
 ### Pré-requisitos
 Instalar a linguagem [Go](https://golang.org/dl/) e seguir os [passos](https://golang.org/doc/install) para adicionar o binário ao PATH do sistema.
 
-Pode-se obter este repositório utilizando o utilitário go get pelo comando:
+Pode-se obter este repositório pelo utilitário go get:
 ```
-go get -v github.com/paulocsilvajr/jogo_velha-go
-
+$ go get -v github.com/paulocsilvajr/jogo_velha-go
 ```
 Após o download, este repositório estará disponível em ~/go/src/github.com/paulocsilvajr/jogo_velha-go.
 
@@ -24,7 +23,6 @@ model/tabuleiro.go: Módulo do pacote model que representa um tabuleiro e suas a
 view/interface_usuario.go: Módulo do pacote view que concentra toda a interação do usuário com a interface do jogo.
 jogo_velha.go: Módulo principa da aplicação. Agrupa todas as funcionalidades dos pacotes anteriores.
 jogo_velha: Binário(linux/AMD64) gerado a partir de jogo_velha.go.
-
 ```
 
 ### Licença
