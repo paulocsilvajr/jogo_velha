@@ -14,7 +14,7 @@ func init() {
 }
 
 func JogaJogadorVsComputador() {
-	// torna rand.Intn realmente aleatório
+	// torna rand.Intn realmente aleatório, baseado no time atual
 	rand.Seed(time.Now().UTC().UnixNano())
 
 	Jogar(marcaPosicaoJogadorVsComputador)

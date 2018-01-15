@@ -24,6 +24,9 @@ func main() {
 	defineModoJogo()
 }
 
+// defineModoJogo é a função principal do jogo da velha.
+// A partir dela é possivel capturar a escolha de modo de jogo e
+// inicializar o devido processo.
 func defineModoJogo() {
 	for {
 		op := view.MostraMenuInicial()
@@ -54,7 +57,11 @@ func jogada(op int, nomeJogador1 string, ehHumano bool) {
 	jogador1.Nome = nomeJogador1
 	jogador1.Humano = ehHumano
 
-	jogo.JogaJogadorVsComputador()
+	if op == 1 {
+		jogo.JogaJogadorVsJogador()
+	} else {
+		jogo.JogaJogadorVsComputador()
+	}
 
 	view.EnterParaContinuar()
 }
