@@ -2,33 +2,56 @@ package model
 
 import "fmt"
 
-type Elemento int                     // Elemento de uma posição do tabuleiro
-type Posicao [2]int                   // Posição de um elemento [linha, coluna]
-type Tabuleiro [Q][Q]Elemento         // Tipo Tabuleiro, matrix de 3x3
-type PosRelativa [Q]Posicao           // Posição relativa para linhas, colunas e diagonais
-type Conjunto [Q]Elemento             // Conjunto representando linha, coluna ou diagonal
-type Conjuntos []Conjunto             // Grupo de conjuntos para agrupar todas as linhas, colunas e diagonal
-type Posicoes []PosRelativa           // Grupo de Posições relativas ao grupo de conjuntos
-type ElementosSimples [Q * Q]Elemento // Conjuntos de todos os elementos do tabuleiro
-type PosicoesSimples [Q * Q]Posicao   // Posicões de todos os elementos do tabuleiro
+// Elemento de uma posição do tabuleiro
+type Elemento int
 
+// Posicao de um elemento [linha, coluna]
+type Posicao [2]int
+
+// Tabuleiro matrix de 3x3
+type Tabuleiro [Q][Q]Elemento
+
+// PosRelativa  são as posições relativas para linhas, colunas e diagonais
+type PosRelativa [Q]Posicao
+
+// Conjunto representando linha, coluna ou diagonal
+type Conjunto [Q]Elemento
+
+// Conjuntos é um grupo de conjuntos para agrupar todas as linhas, colunas e diagonal
+type Conjuntos []Conjunto
+
+// Posicoes é um grupo de Posições relativas ao grupo de conjuntos
+type Posicoes []PosRelativa
+
+// ElementosSimples são conjuntos de todos os elementos do tabuleiro
+type ElementosSimples [Q * Q]Elemento
+
+// PosicoesSimples são posicões de todos os elementos do tabuleiro
+type PosicoesSimples [Q * Q]Posicao
+
+// Vazio representa a casa vazia no tabuleiro.
+// X representa a casa marcada com X(xis).
+// O representa a casa marcada com O(bola).
+// Q representa a quantidade de elementos no tabuleiro(3x3)
 const (
 	Vazio = 0
 	X     = 1
 	O     = 2
-	Q     = 3 // Quantidade de elemento no tabuleiro(3x3)
+	Q     = 3
 )
 
-var I = map[int]string{Vazio: " ", X: "x", O: "o"} // Representação visual de Vazio, X e O
+// I representa a forma visual de Vazio, X e O
+var I = map[int]string{Vazio: " ", X: "x", O: "o"}
 
-// Variáveis não são acessíveis fora do seu pacote
-// portanto, foi criado gets retornando ponteiros
+// Variáveis iniciadas com minúsculo não são acessíveis fora do seu pacote
+// portanto, foi criado gets retornando ponteiros.
 var tab Tabuleiro
 
 func init() {
 	ZeraTabuleiro()
 }
 
+// ZeraTabuleiro atribui em cada posição do tabuleiro VAZIO.
 func ZeraTabuleiro() {
 	tab = [Q][Q]Elemento{
 		[Q]Elemento{Vazio, Vazio, Vazio},
@@ -37,10 +60,12 @@ func ZeraTabuleiro() {
 	}
 }
 
+// GetTabuleiro retorna um ponteiro de tabuleiro referente a variável local tab.
 func GetTabuleiro() *Tabuleiro {
 	return &tab
 }
 
+// Imprime retorna uma string contendo a forma de exibição do tabuleiro.
 func (tabuleiro *Tabuleiro) Imprime() (impressao string) {
 	numHorizontais := "    1   2   3"
 	linhaSeparadora := "  +---+---+---+"
@@ -58,6 +83,7 @@ func (tabuleiro *Tabuleiro) Imprime() (impressao string) {
 	return
 }
 
+// GetSimbolo retorna uma string de acordo com o elemento da casa informado.
 func GetSimbolo(valor Elemento) string {
 	switch valor {
 	case O:
@@ -69,6 +95,7 @@ func GetSimbolo(valor Elemento) string {
 	}
 }
 
+// GetLinha retorna a linha e as posiçoes relativas referente ao parâmetro posicao informado.
 func (tabuleiro *Tabuleiro) GetLinha(posicao int) (Conjunto, PosRelativa) {
 	var posicoes PosRelativa
 	for i := 0; i < Q; i++ {
@@ -78,6 +105,7 @@ func (tabuleiro *Tabuleiro) GetLinha(posicao int) (Conjunto, PosRelativa) {
 	return tabuleiro[posicao], posicoes
 }
 
+// GetColuna retorna a coluna e as posiçoes relativas referente ao parâmetro posicao informado.
 func (tabuleiro *Tabuleiro) GetColuna(posicao int) (Conjunto, PosRelativa) {
 	var colunaTemp [Q]Elemento
 
@@ -97,6 +125,7 @@ func (tabuleiro *Tabuleiro) GetColuna(posicao int) (Conjunto, PosRelativa) {
 	return colunaTemp, posicoes
 }
 
+// GetDiagonal retorna a diagonal e as posiçoes relativas referente ao parâmetro posicao informado.
 func (tabuleiro *Tabuleiro) GetDiagonal(posicao int) (Conjunto, PosRelativa) {
 	var diagonalTemp [Q]Elemento
 
@@ -131,6 +160,8 @@ func (tabuleiro *Tabuleiro) GetDiagonal(posicao int) (Conjunto, PosRelativa) {
 	return diagonalTemp, posicoes
 }
 
+// MarcaPosicao marca a linha e coluna informada com o símbolo referente ao jogador informado.
+// Retorna true se a casa estiver vazia e seja efetuado a atribuição.
 func (tabuleiro *Tabuleiro) MarcaPosicao(jogador *Jogador, linha int, coluna int) bool {
 	if tabuleiro[linha][coluna] == Vazio {
 		tabuleiro[linha][coluna] = Elemento(jogador.Simbolo)
@@ -177,6 +208,7 @@ func (tabuleiro *Tabuleiro) GetElementos() (elementos ElementosSimples, posicoes
 	return
 }
 
+// GetElementosVazios retorna os elementos e as posições atribuidos com vazio.
 func (tabuleiro *Tabuleiro) GetElementosVazios() (elementos []Elemento, posicoes []Posicao) {
 	e, p := tabuleiro.GetElementos()
 	length := len(e)
@@ -189,6 +221,7 @@ func (tabuleiro *Tabuleiro) GetElementosVazios() (elementos []Elemento, posicoes
 	return
 }
 
+// Vitoria retorna o jogador que completo uma linha, coluna ou diagonal.
 func (tabuleiro *Tabuleiro) Vitoria() (jogador *Jogador) {
 	conjuntos, _ := tabuleiro.GetPosicoes()
 

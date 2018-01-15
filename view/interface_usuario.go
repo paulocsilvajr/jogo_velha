@@ -13,6 +13,8 @@ import (
 
 var opcoes = []int{0, 1, 2, 3}
 
+// MostraMenuInicial retorna a opção do usuário de acordo com sua escolha.
+// A variável global opcoes possui a numeração para as opções da listagem.
 func MostraMenuInicial() int {
 	for {
 		LimpaTela()
@@ -47,11 +49,13 @@ func MostraMenuInicial() int {
 	}
 }
 
+// ExibePontuacao exibe visualmente a pontuação do jogador informado.
 func ExibePontuacao(jogador *model.Jogador) {
 	var contV, contD int
+	nome := strings.ToUpper(jogador.Nome)
 
 	if len(jogador.Pontuacao) > 0 {
-		fmt.Println(strings.ToUpper(jogador.Nome))
+		fmt.Println(nome)
 
 		for i, vitoria := range jogador.Pontuacao {
 			fmt.Printf("Partida %d: ", i+1)
@@ -66,9 +70,12 @@ func ExibePontuacao(jogador *model.Jogador) {
 		}
 
 		fmt.Println("Vitórias:", contV, "\nDerrotas:", contD, "\n")
+	} else {
+		fmt.Printf("%s: Nenhum registro de pontuação\n\n", nome)
 	}
 }
 
+// ExibePontuacaoGeral invoca a função ExibePontuacao para cada jogador cadastrado.
 func ExibePontuacaoGeral() {
 	jogadores := model.GetJogadores()
 	for _, jogador := range jogadores {
@@ -76,6 +83,9 @@ func ExibePontuacaoGeral() {
 	}
 }
 
+// EscolhaPosicao define a interface para captura da linha e coluna para jogadores humanos.
+// Faz validação de acordo com o tamanho do tabuleiro.
+// Retorna a linha e coluna informada.
 func EscolhaPosicao(jogador *model.Jogador) (linha, coluna int) {
 	for {
 		fmt.Printf("%s [ %s ], informe uma \nlinha:  ",
@@ -96,6 +106,8 @@ func EscolhaPosicao(jogador *model.Jogador) (linha, coluna int) {
 	}
 }
 
+// EscolhaComputador define a interface visual para exibir a escolha do computador.
+// O parâmetro tipo é utilizado para imprimir se a jogada foi aleatória(R) ou de acordo com algoritmo de IA.
 func EscolhaComputador(jogador *model.Jogador, linha int, coluna int, tipo string) {
 	linha++
 	coluna++
@@ -107,24 +119,29 @@ func EscolhaComputador(jogador *model.Jogador, linha int, coluna int, tipo strin
 		coluna)
 }
 
+// ImprimeTabuleiro imprime o retorno da função tabuleiro.Imprime().
 func ImprimeTabuleiro(tabuleiro *model.Tabuleiro) {
 	fmt.Println(tabuleiro.Imprime())
 }
 
+// PosicaoOcupada imprime a mensagem para posição ocupada.
 func PosicaoOcupada() {
 	fmt.Println("Posição ocupada\n")
 }
 
+// FinalizadoTabuleiro imprime mensagem quando o jogo dá velha.
 func FinalizadoTabuleiro() {
 	LimpaTela()
 	fmt.Println("Deu velha\n")
 }
 
+// Vitoria imprime mensagem de vitória.
 func Vitoria(jogador *model.Jogador) {
 	LimpaTela()
 	fmt.Println("Vitória de", jogador.Nome, "\n")
 }
 
+// LimpaTela executa a limpeza da tela de acordo com sistema operacional.
 func LimpaTela() {
 	sistema := runtime.GOOS // retorna linux, windows, darwin, ...
 
@@ -142,16 +159,19 @@ func LimpaTela() {
 	cmd.Run()
 }
 
+// Espere é uma função para generalizar a espera entre tarefas.
 func Espere() {
 	time.Sleep(time.Second)
 }
 
+// EnterParaContinuar define mensagem e captura do ENTER para pausar o programa quando necessário.
 func EnterParaContinuar() {
 	fmt.Print("\nENTER para continuar ")
 	var temp string
 	fmt.Scanf("%s", &temp)
 }
 
+// FimDeJogo define a mensagem quando finaliza o jogo.
 func FimDeJogo() {
 	fmt.Println("END OF LINE.")
 }

@@ -9,9 +9,10 @@ import (
 var tabuleiro *model.Tabuleiro
 var primeiro, segundo int = 0, 1
 
-// Jogar é a função que faz a rotina de jogadas do jogo da velha ocorrer.
+// Jogar define a rotina de jogadas para o jogo da velha ocorrer.
 // Tem como parâmetro uma função que especifica o modo que ocorre
 // as jogadas para cada tipo de jogador(computador ou humana).
+// Também varia o início da partida entre cada jogador(humano ou máquina).
 func Jogar(jogada_esp func(jogador *model.Jogador)) {
 	maxJogadas := int(math.Pow(model.Q, 2))
 	jogadorAtual := model.GetJogador(primeiro)

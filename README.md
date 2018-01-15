@@ -12,6 +12,22 @@ $ go get -v github.com/paulocsilvajr/jogo_velha-go
 ```
 Após o download, este repositório estará disponível em ~/go/src/github.com/paulocsilvajr/jogo_velha-go.
 
+Para compilar o jogo, entre na pasta do jogo da velha e execute:
+```
+$ go build jogo_velha.go
+$ go install jogo_velha  # Instala o jogo da velha na pasta ~/go/bin
+```
+
+Para acessar a docstring, execute:
+```
+$ go cmd/github.com/paulocsilvajr/jogo_velha-go       # exibe pacotes
+$ go cmd/github.com/paulocsilvajr/jogo_velha-go/jogo  # pacote jogo
+$ go cmd/github.com/paulocsilvajr/jogo_velha-go/model # pacote model
+$ go cmd/github.com/paulocsilvajr/jogo_velha-go/view  # pacote view
+```
+
+
+
 ### Arquivos
 
 ```

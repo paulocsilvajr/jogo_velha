@@ -10,6 +10,9 @@ func init() {
 	tabuleiro = model.GetTabuleiro()
 }
 
+// JogaJogadorVsJogador implementa a mecânica para a opção Jogador vs Jogador.
+// Utiliza da função Joga com parâmetro a função marcaPosicaoJogadorVsJogador, para
+// definir como é a interação do jogador nesse tipo de jogo.
 func JogaJogadorVsJogador() {
 	Jogar(marcaPosicaoJogadorVsJogador)
 }

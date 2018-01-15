@@ -14,7 +14,7 @@ var partida int
 
 func init() {
 	jogador0.Nome, jogador0.Simbolo, jogador0.Humano = "Jogador nº 1", model.X, true
-	jogador1.Simbolo = model.O
+	jogador1.Nome, jogador1.Simbolo = "Douglas Adams", model.O
 
 	model.AddJogador(&jogador0)
 	model.AddJogador(&jogador1)
@@ -26,7 +26,8 @@ func main() {
 
 // defineModoJogo é a função principal do jogo da velha.
 // A partir dela é possivel capturar a escolha de modo de jogo e
-// inicializar o devido processo.
+// inicializar o devido tipo de partida ou a exibição do pontuação
+// acumulada do ultimo tipo selecionado.
 func defineModoJogo() {
 	for {
 		op := view.MostraMenuInicial()
@@ -57,11 +58,6 @@ func jogada(op int, nomeJogador1 string, ehHumano bool, joga func()) {
 	jogador1.Nome = nomeJogador1
 	jogador1.Humano = ehHumano
 
-	// if op == 1 {
-	// 	jogo.JogaJogadorVsJogador()
-	// } else {
-	// 	jogo.JogaJogadorVsComputador()
-	// }
 	joga()
 
 	view.EnterParaContinuar()

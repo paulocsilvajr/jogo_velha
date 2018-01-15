@@ -13,6 +13,10 @@ func init() {
 	tabuleiro = model.GetTabuleiro()
 }
 
+// JogaJogadorVsComputador implementa a mecânica para a opção Jogador vs Computador.
+// É definido o seed baseado no time atual para a randomização de rand.Intn e
+// é invocado a função Joga com parâmetro a função marcaPosicaoJogadorVsComputador para
+// estabelecer a forma de jogar contra o computador.
 func JogaJogadorVsComputador() {
 	// torna rand.Intn realmente aleatório, baseado no time atual
 	rand.Seed(time.Now().UTC().UnixNano())
