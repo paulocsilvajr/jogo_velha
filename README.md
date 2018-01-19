@@ -14,8 +14,8 @@ Após o download, este repositório estará disponível em ~/go/src/github.com/p
 
 Para compilar o jogo, entre na pasta do jogo da velha e execute:
 ```
-$ go build jogo_velha.go
-$ go install jogo_velha  # Instala o jogo da velha na pasta ~/go/bin
+$ go build jogo_velha.go  # Gera o binário na pasta local
+$ go install jogo_velha   # Instala o jogo da velha na pasta ~/go/bin
 ```
 
 Para acessar a docstring, execute:
@@ -38,7 +38,6 @@ model/jogador.go: Módulo do pacote model que representa um jogador e suas açõ
 model/tabuleiro.go: Módulo do pacote model que representa um tabuleiro e suas ações.
 view/interface_usuario.go: Módulo do pacote view que concentra toda a interação do usuário com a interface do jogo.
 jogo_velha.go: Módulo principa da aplicação. Agrupa todas as funcionalidades dos pacotes anteriores.
-jogo_velha: Binário(linux/AMD64) gerado a partir de jogo_velha.go.
 ```
 
 ### Licença
