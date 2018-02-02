@@ -20,13 +20,11 @@ $ go install jogo_velha   # Instala o jogo da velha na pasta ~/go/bin
 
 Para acessar a docstring, execute:
 ```
-$ go cmd/github.com/paulocsilvajr/jogo_velha-go       # exibe pacotes
-$ go cmd/github.com/paulocsilvajr/jogo_velha-go/jogo  # pacote jogo
-$ go cmd/github.com/paulocsilvajr/jogo_velha-go/model # pacote model
-$ go cmd/github.com/paulocsilvajr/jogo_velha-go/view  # pacote view
+$ godoc cmd/github.com/paulocsilvajr/jogo_velha-go       # exibe pacotes
+$ godoc cmd/github.com/paulocsilvajr/jogo_velha-go/jogo  # pacote jogo
+$ godoc cmd/github.com/paulocsilvajr/jogo_velha-go/model # pacote model
+$ godoc cmd/github.com/paulocsilvajr/jogo_velha-go/view  # pacote view
 ```
-
-
 
 ### Arquivos
 
