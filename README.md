@@ -8,9 +8,9 @@ Instalar a linguagem [Go](https://golang.org/dl/) e seguir os [passos](https://g
 
 Pode-se obter este repositório pelo utilitário go get:
 ```
-$ go get -v github.com/paulocsilvajr/jogo_velha-go
+$ go get -v github.com/paulocsilvajr/jogo_velha
 ```
-Após o download, este repositório estará disponível em ~/go/src/github.com/paulocsilvajr/jogo_velha-go.
+Após o download, este repositório estará disponível em ~/go/src/github.com/paulocsilvajr/jogo_velha.
 
 Para compilar o jogo, entre na pasta do jogo da velha e execute:
 ```
@@ -20,10 +20,10 @@ $ go install jogo_velha   # Instala o jogo da velha na pasta ~/go/bin
 
 Para acessar a docstring, execute:
 ```
-$ godoc cmd/github.com/paulocsilvajr/jogo_velha-go       # exibe pacotes
-$ godoc cmd/github.com/paulocsilvajr/jogo_velha-go/jogo  # pacote jogo
-$ godoc cmd/github.com/paulocsilvajr/jogo_velha-go/model # pacote model
-$ godoc cmd/github.com/paulocsilvajr/jogo_velha-go/view  # pacote view
+$ godoc cmd/github.com/paulocsilvajr/jogo_velha       # exibe pacotes
+$ godoc cmd/github.com/paulocsilvajr/jogo_velha/jogo  # pacote jogo
+$ godoc cmd/github.com/paulocsilvajr/jogo_velha/model # pacote model
+$ godoc cmd/github.com/paulocsilvajr/jogo_velha/view  # pacote view
 ```
 
 ### Arquivos
@@ -35,7 +35,7 @@ jogo/jogo.go: Módulo principal do pacote jogo que agrupa as funcionalidades do 
 model/jogador.go: Módulo do pacote model que representa um jogador e suas ações.
 model/tabuleiro.go: Módulo do pacote model que representa um tabuleiro e suas ações.
 view/interface_usuario.go: Módulo do pacote view que concentra toda a interação do usuário com a interface do jogo.
-jogo_velha.go: Módulo principa da aplicação. Agrupa todas as funcionalidades dos pacotes anteriores.
+jogo_velha.go: Módulo principal da aplicação. Agrupa todas as funcionalidades dos pacotes anteriores.
 ```
 
 ### Licença
