@@ -1,9 +1,10 @@
 package jogo
 
 import (
-	"jogo_velha/model"
-	"jogo_velha/view"
 	"math"
+
+	"github.com/paulocsilvajr/jogo_velha/model"
+	"github.com/paulocsilvajr/jogo_velha/view"
 )
 
 var tabuleiro *model.Tabuleiro

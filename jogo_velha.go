@@ -1,10 +1,11 @@
 package main
 
 import (
-	"jogo_velha/jogo"
-	"jogo_velha/model"
-	"jogo_velha/view"
 	"os"
+
+	"github.com/paulocsilvajr/jogo_velha/jogo"
+	"github.com/paulocsilvajr/jogo_velha/model"
+	"github.com/paulocsilvajr/jogo_velha/view"
 )
 
 var jogador0 model.Jogador

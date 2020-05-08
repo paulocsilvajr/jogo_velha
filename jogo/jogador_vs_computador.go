@@ -2,10 +2,11 @@ package jogo
 
 import (
 	"fmt"
-	"jogo_velha/model"
-	"jogo_velha/view"
 	"math/rand"
 	"time"
+
+	"github.com/paulocsilvajr/jogo_velha/model"
+	"github.com/paulocsilvajr/jogo_velha/view"
 )
 
 func init() {

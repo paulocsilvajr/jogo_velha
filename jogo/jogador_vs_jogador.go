@@ -1,8 +1,8 @@
 package jogo
 
 import (
-	"jogo_velha/model"
-	"jogo_velha/view"
+	"github.com/paulocsilvajr/jogo_velha/model"
+	"github.com/paulocsilvajr/jogo_velha/view"
 )
 
 func init() {

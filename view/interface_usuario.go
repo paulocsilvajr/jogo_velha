@@ -2,13 +2,14 @@ package view
 
 import (
 	"fmt"
-	"jogo_velha/model"
 	"os"
 	"os/exec"
 	"runtime"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/paulocsilvajr/jogo_velha/model"
 )
 
 var opcoes = []int{0, 1, 2, 3}
