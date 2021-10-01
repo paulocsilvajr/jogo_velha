@@ -14,16 +14,17 @@ Após o download, este repositório estará disponível em ~/go/src/github.com/p
 
 Para compilar o jogo, entre na pasta do jogo da velha e execute:
 ```
-$ go build jogo_velha.go  # Gera o binário na pasta local
-$ go install jogo_velha   # Instala o jogo da velha na pasta ~/go/bin
+$ go build  # Gera o binário na pasta local
+$ go install  # Instala o jogo da velha na pasta ~/go/bin
 ```
+Ou compile via script './build.sh'
 
 Para acessar a docstring, execute:
 ```
-$ godoc cmd/github.com/paulocsilvajr/jogo_velha       # exibe pacotes
-$ godoc cmd/github.com/paulocsilvajr/jogo_velha/jogo  # pacote jogo
-$ godoc cmd/github.com/paulocsilvajr/jogo_velha/model # pacote model
-$ godoc cmd/github.com/paulocsilvajr/jogo_velha/view  # pacote view
+$ go doc github.com/paulocsilvajr/jogo_velha       # exibe pacotes
+$ go doc github.com/paulocsilvajr/jogo_velha/jogo  # pacote jogo
+$ go doc github.com/paulocsilvajr/jogo_velha/model # pacote model
+$ go doc github.com/paulocsilvajr/jogo_velha/view  # pacote view
 ```
 
 ### Arquivos
@@ -35,7 +36,9 @@ jogo/jogo.go: Módulo principal do pacote jogo que agrupa as funcionalidades do 
 model/jogador.go: Módulo do pacote model que representa um jogador e suas ações.
 model/tabuleiro.go: Módulo do pacote model que representa um tabuleiro e suas ações.
 view/interface_usuario.go: Módulo do pacote view que concentra toda a interação do usuário com a interface do jogo.
-jogo_velha.go: Módulo principal da aplicação. Agrupa todas as funcionalidades dos pacotes anteriores.
+jogo_velha.go: Agrupa todas as funcionalidades dos pacotes anteriores.
+main.go: Módulo principal da aplicação.
+build.sh: Script para compilar como o executável jogo_velha
 ```
 
 ### Licença
