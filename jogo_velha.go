@@ -21,10 +21,6 @@ func init() {
 	model.AddJogador(&jogador1)
 }
 
-func main() {
-	defineModoJogo()
-}
-
 // defineModoJogo é a função principal do jogo da velha.
 // A partir dela é possivel capturar a escolha de modo de jogo e
 // inicializar o devido tipo de partida ou a exibição do pontuação
