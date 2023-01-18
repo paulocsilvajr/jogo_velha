@@ -1,3 +1,5 @@
 #! /usr/bin/env bash
 
-go build -o jogo_velha
+EXENAME=jogo_velha
+
+go build -o $EXENAME && echo "Gerado executável '$EXENAME'"
